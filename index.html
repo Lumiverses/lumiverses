@@ -1,9 +1,9 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Game Database - Glassmorphism Polished</title>
+    <title>Card Game Database - Lumiverse</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet"> 
@@ -29,21 +29,18 @@
             --text-code-dark: #a1a1aa; 
             --text-code-light: #52525b;
 
-            /* Chip Colors - Text color will be white/very light for all */
-            --icon-color-action: #0ea5e9;    /* Cerulean */
-            --icon-color-target: #22c55e;    /* Green */
-            --icon-color-details: #eab308;   /* Electric Yellow */
-            --icon-color-condition: #3b82f6;  /* Blue */
-            --icon-color-timing: #dc2626;     /* Cherry Red */
-            --icon-color-cost: #ef4444;       /* Red */
-            --chip-text-on-vibrant: #ffffff; 
-            --chip-details-text-on-vibrant: #212529; 
+            --icon-color-action: #0ea5e9;
+            --icon-color-target: #22c55e;
+            --icon-color-details: #eab308;
+            --icon-color-condition: #3b82f6;
+            --icon-color-timing: #dc2626;
+            --icon-color-cost: #ef4444;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         .light-theme {
@@ -54,14 +51,11 @@
             --text-secondary: var(--text-secondary-light);
             --text-code: var(--text-code-light);
             --shadow-color: var(--shadow-color-light);
-            --highlight-color: var(--highlight-color-light);
-            --component-bg: var(--bg-light); 
-            --shadow-sm-outer: 1px 1px 3px #b8bec7, -1px -1px 3px #ffffff;
-            --shadow-md-outer: 3px 3px 6px #b8bec7, -3px -3px 6px #ffffff;
-            --shadow-lg-outer: 5px 5px 10px #b8bec7, -5px -5px 10px #ffffff;
-            --shadow-sm-inner: inset 1px 1px 2px #b8bec7, inset -1px -1px 2px #ffffff;
-            --shadow-md-inner: inset 2px 2px 4px #b8bec7, inset -2px -2px 4px #ffffff;
         }
+        .light-theme #headerLogo {
+            filter: invert(1) hue-rotate(180deg) brightness(0.8) contrast(1.2); /* Invert logo colors for light mode */
+        }
+
 
         .dark-theme {
             --bg-color: var(--bg-dark);
@@ -71,388 +65,195 @@
             --text-secondary: var(--text-secondary-dark);
             --text-code: var(--text-code-dark);
             --shadow-color: var(--shadow-color-dark);
-            --highlight-color: var(--highlight-color-dark);
-            --component-bg: #1f2227; 
-            --shadow-sm-outer: 2px 2px 4px #0a0a0a, -2px -2px 4px #343840;
-            --shadow-md-outer: 4px 4px 8px #0a0a0a, -4px -4px 8px #343840;
-            --shadow-lg-outer: 6px 6px 12px #0a0a0a, -6px -6px 12px #343840;
-            --shadow-sm-inner: inset 2px 2px 3px #0a0a0a, inset -2px -2px 3px #343840;
-            --shadow-md-inner: inset 3px 3px 5px #0a0a0a, inset -3px -3px 5px #343840;
         }
         
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-        }
-
-        .glassmorphic {
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(18px) saturate(180%); 
-            -webkit-backdrop-filter: blur(18px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 6px 20px var(--shadow-color);
-        }
+        body { background-color: var(--bg-color); color: var(--text-primary); }
+        .glassmorphic { background-color: var(--glass-bg); backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%); border: 1px solid var(--glass-border); box-shadow: 0 6px 20px var(--shadow-color); }
+        .card-thumbnail { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .card-thumbnail:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 30px var(--shadow-color); }
         
-        .card-thumbnail {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            border-radius: 0px; 
-        }
-        .card-thumbnail:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 30px var(--shadow-color);
-        }
-        .card-thumbnail-image-container {
-            background-color: transparent; 
-            display: flex; 
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; 
-            border-radius: 0px !important;
-            padding: 0; 
-        }
-        .card-thumbnail-content { 
-             border-radius: 0px !important; 
-             background-color: transparent; 
-             padding: 0.75rem; 
-             display: flex; /* For aligning text and add button */
-             justify-content: space-between; /* Space between text and button */
-             align-items: center; /* Vertically align items */
-        }
-
-        .card-thumbnail-image-container img {
-            width: 100%; height: auto; max-height: 350px; 
-            object-fit: contain; border-radius: 0px !important; 
-        }
-        .related-cards-container .card-thumbnail { border-radius: 0px !important; }
+        .card-thumbnail-image-container img, #detailCardImage, .deck-card-list-image { border-radius: 0px !important; }
+        .card-thumbnail-image-container, #detailCardImageContainer { border-radius: 0px !important; }
+        .card-thumbnail-image-container img { width: 100%; height: auto; max-height: 350px; object-fit: contain; }
         .related-cards-container .card-thumbnail-image-container img { max-height: 280px; }
-        
-        #detailCardImageContainer { 
-            width: 100%; max-width: 400px; margin-left: auto; margin-right: auto;
-            display: flex; align-items: center; justify-content: center;
-            padding: 10px; border-radius: 12px; 
-        }
         #detailCardImageContainer img { max-width: 100%; height: auto; object-fit: contain; }
 
-        /* Syntax Tile Styling - Radically Simple Glassmorphic */
-        .syntax-effect-block { 
-            padding: 12px; 
-            margin-bottom: 16px;
-            border-radius: 10px; 
-        }
-        .syntax-chip-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px; 
-        }
-        .syntax-tile { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: flex-end; /* Icon at bottom, text above it */
-            min-width: 225px; /* Widened by 50% from 150px */
-            height: 80px; /* 20% smaller than 100px */
-            padding: 8px; 
-            border-radius: 12px; 
-            font-family: 'Roboto Mono', monospace; 
-            font-weight: 500; 
-            text-align: center;
-            transition: box-shadow 0.2s ease, transform 0.2s ease;
-            background-color: var(--glass-bg); 
-            backdrop-filter: blur(10px) saturate(160%);
-            -webkit-backdrop-filter: blur(10px) saturate(160%);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 15px var(--shadow-color);
-        }
-        .syntax-tile:hover {
-            transform: scale(1.03); /* Slightly less pop for tiles */
-            box-shadow: 0 5px 20px var(--shadow-color);
-        }
-        .syntax-tile-icon {
-            width: 28px; height: 28px; /* Adjusted icon size */
-            margin-top: 4px; /* Space above icon if text is short */
-        }
-        .syntax-tile span { 
-            font-size: 0.75rem; 
-            line-height: 1.2;
-            max-width: 100%;
-            overflow-wrap: break-word;
-            color: var(--text-primary); 
-            margin-bottom: 4px; /* Space below text */
-        }
-        .syntax-tile span strong {
-            color: var(--text-primary); 
-            font-weight: 700;
-        }
+        .syntax-chip-grid { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+        .syntax-tile { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background-color: rgba(var(--glass-bg-dark-rgb, 28, 28, 30), 0.4); backdrop-filter: blur(5px) saturate(100%); -webkit-backdrop-filter: blur(5px) saturate(100%); }
+        .dark-theme .syntax-tile { background-color: rgba(40,40,42,0.5); }
+        .light-theme .syntax-tile { background-color: rgba(255,255,255,0.3); }
+        .syntax-tile-text-content { flex-grow: 1; text-align: left; font-size: 0.875rem; line-height: 1.25rem; color: var(--text-primary); margin-right: 0.75rem; }
+        .syntax-tile-text-content strong { font-weight: 600; }
+        .syntax-tile-text-content .condition-text, .syntax-tile-text-content .timing-text { font-style: italic; opacity: 0.8; font-size: 0.8em; display: block; margin-top: 0.25rem; }
+        .syntax-tile-icon { width: 20px; height: 20px; flex-shrink: 0; }
+        .tile-action .syntax-tile-icon { color: var(--icon-color-action); } .tile-target .syntax-tile-icon { color: var(--icon-color-target); } .tile-details .syntax-tile-icon { color: var(--icon-color-details); } .tile-condition .syntax-tile-icon { color: var(--icon-color-condition); } .tile-timing .syntax-tile-icon { color: var(--icon-color-timing); } .tile-cost .syntax-tile-icon { color: var(--icon-color-cost); }
 
-        .tile-action .syntax-tile-icon { color: var(--icon-color-action); }
-        .tile-target .syntax-tile-icon { color: var(--icon-color-target); }
-        .tile-details .syntax-tile-icon { color: var(--icon-color-details); }
-        .tile-condition .syntax-tile-icon { color: var(--icon-color-condition); }
-        .tile-timing .syntax-tile-icon { color: var(--icon-color-timing); }
-        .tile-cost .syntax-tile-icon { color: var(--icon-color-cost); }
+        #detailCardAttributesSection.glassmorphic { padding: 1.5rem; }
+        .attribute-list { font-family: 'Roboto Mono', monospace; color: var(--text-code); font-size: 0.9rem; line-height: 1.7; padding: 1rem 0; }
+        .attribute-list div::before { content: "// "; opacity: 0.5; }
+        .attribute-list strong { color: var(--text-primary); font-weight: 500; }
 
-
-        /* Attribute Styling - Code-like */
-        #detailCardAttributesSection {
-            margin-top: 2rem;
-        }
-        .attribute-list {
-            font-family: 'Roboto Mono', monospace; 
-            color: var(--text-code);
-            font-size: 0.9rem; 
-            line-height: 1.7;
-            padding: 1rem;
-            border-radius: 8px;
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 2px 8px var(--shadow-color);
-        }
-        .attribute-list div::before {
-            content: "// ";
-            opacity: 0.5; 
-        }
-        .attribute-list strong {
-            color: var(--text-primary); 
-            font-weight: 500; 
-        }
-
-
-        .filter-button { 
-            transition: box-shadow 0.2s, background-color 0.2s, color 0.2s;
-            padding: 0.5rem 1rem; border: none; 
-            color: var(--text-secondary);
-            border-radius: 8px;
-        }
-        .filter-button.active { 
-            box-shadow: 0 0 10px var(--accent-color), inset 0 0 5px var(--accent-color); 
-            color: var(--accent-color); 
-            font-weight: 600;
-            background-color: rgba(0, 122, 255, 0.15); 
-        }
-        .filter-button:not(.active):hover { 
-            box-shadow: 0 4px 10px var(--shadow-color); 
-            color: var(--text-primary); 
-        }
-
-        .theme-switch-wrapper { display: flex; align-items: center; }
+        .theme-switch-wrapper { display: flex; align-items: center; position: relative; }
         .theme-switch { display: inline-block; height: 26px; position: relative; width: 50px; margin-left:10px; }
         .theme-switch input { display:none; }
         .slider { background-color: rgba(120,120,128,0.5); bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 26px; }
-        .slider:before { background-color: #fff; bottom: 3px; content: ""; height: 20px; left: 3px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+        .slider:before { background-color: #fff; bottom: 3px; content: ""; height: 20px; left: 3px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.3); z-index: 10;}
         input:checked + .slider { background-color: var(--accent-color); }
         input:checked + .slider:before { transform: translateX(24px); }
         .dark-theme .slider { background-color: rgba(74,85,104,0.7); } 
         .dark-theme .slider:before { background-color: var(--glass-bg-dark); } 
+        .theme-icon { position: absolute; top: 50%; transform: translateY(-50%); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
+        .sun-icon { left: 5px; opacity: 0; color: #facc15; /* Tailwind yellow-400 */ }
+        .moon-icon { right: 5px; opacity: 1; color: #f3f4f6; /* Tailwind gray-100 */ }
+        .light-theme .sun-icon { opacity: 1; }
+        .light-theme .moon-icon { opacity: 0; }
+        .dark-theme .sun-icon { opacity: 0; }
+        .dark-theme .moon-icon { opacity: 1; }
 
-        html { overflow-y: scroll; }
-        .hidden-section { display: none !important; }
 
-        .related-cards-container::-webkit-scrollbar {
-            height: 20px; 
-            width: 20px;
-        }
-        .related-cards-container::-webkit-scrollbar-track {
-            background: rgba(120, 120, 128, 0.1); 
-            border-radius: 10px; 
-            border: 1px solid var(--glass-border);
-        }
-        .related-cards-container::-webkit-scrollbar-thumb {
-            background: var(--glass-bg);
-            border-radius: 10px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 3px 8px var(--shadow-color);
-        }
-        .dark-theme .related-cards-container::-webkit-scrollbar-thumb {
-            background: var(--glass-bg-dark); 
-            border-color: var(--glass-border-dark);
-        }
+        html { overflow-y: scroll; } .hidden-section { display: none !important; }
+        .related-cards-container::-webkit-scrollbar { height: 20px; width: 20px; } .related-cards-container::-webkit-scrollbar-track { background: rgba(120, 120, 128, 0.1); border-radius: 10px; border: 1px solid var(--glass-border); } .related-cards-container::-webkit-scrollbar-thumb { background: var(--glass-bg); border-radius: 10px; border: 1px solid var(--glass-border); box-shadow: 0 3px 8px var(--shadow-color); } .dark-theme .related-cards-container::-webkit-scrollbar-thumb { background: var(--glass-bg-dark); border-color: var(--glass-border-dark); }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s; } .modal-overlay.active { opacity: 1; visibility: visible; transition: opacity 0.3s ease; } 
+        .modal-content { padding: 1rem; /* Reduced padding for mobile */ sm:padding: 1.5rem; md:padding: 2rem; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; border-radius: 16px; }
+        .onboarding-step { display: none; } .onboarding-step.active { display: block; } .onboarding-input { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid var(--glass-border); border-radius: 8px; background-color: var(--glass-bg); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: var(--text-primary); box-shadow: 0 2px 5px var(--shadow-color); } .onboarding-input::placeholder { color: var(--text-secondary); } .onboarding-button { padding: 0.75rem 1.5rem; border: 1px solid var(--glass-border); border-radius: 8px; background-color: var(--glass-bg); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: var(--accent-color); font-weight: 600; cursor: pointer; box-shadow: 0 2px 5px var(--shadow-color); transition: background-color 0.2s, box-shadow 0.2s; } .onboarding-button:hover { background-color: rgba(0, 122, 255, 0.2); box-shadow: 0 4px 10px var(--shadow-color); } .survey-option label { margin-left: 0.5rem; color: var(--text-secondary); } .survey-option input[type="checkbox"] { appearance: none; background-color: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: 0 1px 2px var(--shadow-color); border-radius: 4px; width: 20px; height: 20px; cursor: pointer; position: relative; margin-right: 0.5rem; vertical-align: middle; } .survey-option input[type="checkbox"]:checked { background-color: var(--accent-color); border-color: var(--accent-color); box-shadow: 0 0 8px var(--accent-color); } .survey-option input[type="checkbox"]:checked::after { content: '✔'; color: white; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 14px; }
+        .deck-icon-btn svg { width: 28px; height: 28px; color: var(--text-secondary); transition: color 0.2s; } .deck-icon-btn:hover svg { color: var(--accent-color); }
+        .auth-button, .deck-icon-btn { height: 38px; /* Match typical button height */ display: inline-flex; align-items: center; }
 
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0,0,0,0.7); 
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000;
-            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s;
-        }
-        .modal-overlay.active {
-            opacity: 1; visibility: visible; transition: opacity 0.3s ease;
-        }
-        .modal-content { 
-            padding: 2rem;
-            width: 90%; max-width: 500px;
-            max-height: 90vh; overflow-y: auto;
-            border-radius: 16px; 
-        }
-        .onboarding-step { display: none; }
-        .onboarding-step.active { display: block; }
-        .onboarding-input { 
-            width: 100%; padding: 0.75rem; margin-bottom: 1rem;
-            border: 1px solid var(--glass-border); 
-            border-radius: 8px;
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            color: var(--text-primary);
-            box-shadow: 0 2px 5px var(--shadow-color);
-        }
-        .onboarding-input::placeholder { color: var(--text-secondary); }
-        .onboarding-button { 
-            padding: 0.75rem 1.5rem; 
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            color: var(--accent-color);
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 2px 5px var(--shadow-color);
-            transition: background-color 0.2s, box-shadow 0.2s;
-        }
-        .onboarding-button:hover {
-            background-color: rgba(0, 122, 255, 0.2); 
-            box-shadow: 0 4px 10px var(--shadow-color);
-        }
-        .survey-option { margin-bottom: 0.5rem; }
-        .survey-option label { margin-left: 0.5rem; color: var(--text-secondary); }
-        .survey-option input[type="checkbox"] {
-            appearance: none;
-            background-color: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 1px 2px var(--shadow-color);
-            border-radius: 4px;
-            width: 20px; height: 20px;
-            cursor: pointer;
-            position: relative;
-            margin-right: 0.5rem;
-            vertical-align: middle;
-        }
-        .survey-option input[type="checkbox"]:checked {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            box-shadow: 0 0 8px var(--accent-color);
-        }
-        .survey-option input[type="checkbox"]:checked::after {
-            content: '✔';
-            color: white;
-            position: absolute;
-            left: 50%; top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-        }
-        .deck-icon-btn {
-            background: none; border: none; padding: 0.5rem; cursor: pointer;
-        }
-        .deck-icon-btn svg {
-            width: 28px; height: 28px; color: var(--text-secondary);
-            transition: color 0.2s;
-        }
-        .deck-icon-btn:hover svg { color: var(--accent-color); }
 
-        .search-container {
-            position: relative;
-            width: 100%;
-        }
-        .search-container input {
-            padding-right: 2.5rem; 
-        }
-        .search-container .search-icon {
-            position: absolute;
-            top: 50%;
-            right: 0.75rem;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            pointer-events: none; 
-        }
+        .search-container { position: relative; }
+        #search { padding-left: 3.5rem; /* Increased for larger icon + caret */ padding-right: 1rem; border: none !important; background-color: transparent !important; box-shadow: none !important; font-size: 1.125rem; /* Larger placeholder/input text */ }
+        .search-bar-area.glassmorphic { /* Parent provides the visual bar */ }
+        .search-icon-wrapper { position: absolute; top: 50%; left: 1rem; /* Adjusted for larger icon */ transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; z-index: 1; }
+        .search-icon-wrapper svg { height: 1.875rem; width: 1.875rem; /* 50% larger: 1.25rem * 1.5 = 1.875rem (h-7.5 w-7.5) */ }
+        .blinking-caret { position: absolute; left: 3.25rem; /* After larger icon */ top: 50%; transform: translateY(-50%); height: 1.35em; /* 50% larger */ width: 2.25px; /* 50% larger */ background-color: var(--text-primary-dark); animation: blink 1s infinite steps(1, end); z-index: 0; pointer-events: none; }
+        .light-theme .blinking-caret { background-color: var(--text-primary-light); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        #cardTypeFilterDropdown { color: var(--text-primary); background-color: var(--glass-bg); border: 1px solid var(--glass-border); padding: 0.625rem 2.5rem 0.625rem 0.75rem; border-radius: 9999px; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236B7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.25em 1.25em; }
+        .dark-theme #cardTypeFilterDropdown { background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%23D1D5DB%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22%2F%3E%3C%2Fsvg%3E'); }
+        #userWelcomeMessage { color: var(--text-secondary); margin-left: 10px; font-size: 0.9rem; }
+        .error-message { color: #ef4444; font-size: 0.75rem; margin-top: -0.5rem; margin-bottom: 0.5rem; }
+
+        /* Rules Page Specific Styles */
+        #rulesView { line-height: 1.7; }
+        #rulesView h2 { font-size: 1.75rem; sm:font-size: 2rem; font-weight: bold; margin-top: 2rem; margin-bottom: 1rem; color: var(--accent-color); border-bottom: 2px solid var(--glass-border); padding-bottom: 0.5rem; }
+        #rulesView h3 { font-size: 1.25rem; sm:font-size: 1.5rem; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+        #rulesView h4 { font-size: 1.1rem; sm:font-size: 1.2rem; font-weight: bold; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        #rulesView p, #rulesView li { margin-bottom: 0.75rem; color: var(--text-secondary); }
+        #rulesView strong { color: var(--text-primary); font-weight: 600; }
+        #rulesView ul { list-style-type: disc; margin-left: 1.5rem; sm:margin-left: 2rem; }
+        #rulesView ol { list-style-type: decimal; margin-left: 1.5rem; sm:margin-left: 2rem; }
+        .rules-illustration-placeholder { border: 2px dashed var(--glass-border); padding: 1rem; margin: 1rem 0; text-align: center; color: var(--text-secondary); font-style: italic; border-radius: 8px; }
 
     </style>
 </head>
 <body>
-    <div id="app" class="container mx-auto p-4 md:p-8">
-        <header class="mb-8 flex justify-between items-center">
-            <div class="flex-grow text-right flex items-center justify-end"> 
-                <p class="text-lg" style="color: var(--text-secondary);">Browse and discover cards</p>
-                <img src="https://assets-global.website-files.com/6572109dffe2c406961465ca/65721689427c1e9fc0d9a9ce_Lumi%20Starblade%20Logo-p-500.png" alt="Logo" style="height: 20px; width: auto; margin-left: 10px;">
+    <div id="app" class="container mx-auto p-2 sm:p-4 md:p-8">
+        <header class="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-center">
+            <div class="flex-grow flex items-center justify-center sm:justify-start w-full sm:w-auto mb-4 sm:mb-0"> 
+                <a href="javascript:void(0);" onclick="showGalleryView();" title="Go to Card Gallery" class="flex items-center mr-2">
+                    <img id="headerLogo" src="https://assets-global.website-files.com/6572109dffe2c406961465ca/65721689427c1e9fc0d9a9ce_Lumi%20Starblade%20Logo-p-500.png" alt="Logo" style="height: 20px; width: auto;">
+                </a>
+                <p class="text-sm sm:text-base" style="color: var(--text-secondary);">Browse & Discover</p> <span id="userWelcomeMessage" class="ml-3 text-xs sm:text-sm hidden sm:inline" style="color: var(--text-secondary);"></span>
             </div>
-            <div class="flex items-center ml-4"> 
-                 <button id="signUpButton" class="glassmorphic text-sm font-semibold py-2 px-4 transition duration-150 ease-in-out rounded-lg mr-2" style="color: var(--accent-color);">Sign Up</button>
-                 <button id="deckIcon" class="deck-icon-btn glassmorphic rounded-lg p-2" title="View Deck">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+            <div class="flex items-center flex-wrap justify-center sm:justify-end gap-2">
+                <button id="howToPlayButton" class="auth-button glassmorphic text-xs sm:text-sm font-semibold py-2 px-3 transition duration-150 ease-in-out rounded-lg" style="color: var(--accent-color);">How to Play</button>
+                <button id="signUpButton" class="auth-button glassmorphic text-xs sm:text-sm font-semibold py-2 px-3 transition duration-150 ease-in-out rounded-lg" style="color: var(--accent-color);">Sign Up</button>
+                <button id="logoutButton" class="auth-button hidden glassmorphic text-xs sm:text-sm font-semibold py-2 px-3 transition duration-150 ease-in-out rounded-lg" style="color: var(--accent-color);">Logout</button>
+                <button id="deckIcon" class="deck-icon-btn glassmorphic rounded-lg p-2" title="View Deck">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 sm:h-auto sm:w-auto"> <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
                     </svg>
-                 </button>
+                </button>
             </div>
         </header>
 
         <main id="mainContent">
             <section id="galleryView">
-                <div class="mb-8 p-6 glassmorphic rounded-lg"> 
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                        <div class="flex-shrink-0 md:w-auto w-full order-1 md:order-1 search-container"> {/* Search on left */}
-                            <input type="text" id="search" placeholder="Search name, text, effects..."
-                                   class="w-full p-2.5 border-none glassmorphic rounded-full focus:ring-2 focus:ring-[var(--accent-color)] transition pr-10"
-                                   style="color: var(--text-primary);">
-                            <div class="search-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                <div class="mb-6 sm:mb-8 p-4 sm:p-6 glassmorphic rounded-lg search-bar-area"> 
+                    <div class="flex flex-col md:flex-row md:items-center gap-3 sm:gap-4">
+                        <div class="flex-grow search-container relative order-1">
+                            <div class="search-icon-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
                             </div>
+                            <span class="blinking-caret" aria-hidden="true"></span>
+                            <input type="text" id="search" 
+                                   class="w-full p-2.5 transition rounded-full text-sm sm:text-base" 
+                                   style="color: var(--text-primary);">
                         </div>
-                        <div class="flex-grow md:ml-4 order-2 md:order-2"> {/* Filters on right */}
-                            <div id="cardTypeFiltersContainer" class="flex flex-wrap gap-2 items-center justify-end"></div>
+                        <div class="flex-shrink-0 order-2 md:ml-4 w-full md:w-auto"> 
+                            <select id="cardTypeFilterDropdown" class="focus:ring-2 focus:ring-[var(--accent-color)] transition w-full text-sm sm:text-base">
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"></div>
-                <p id="noResults" class="text-center text-xl py-10 hidden" style="color: var(--text-secondary);">No cards found.</p>
+                <div id="cardGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6"></div> <p id="noResults" class="text-center text-lg sm:text-xl py-10 hidden" style="color: var(--text-secondary);">No cards found.</p>
             </section>
 
-            <section id="detailView" class="hidden p-6 md:p-10 glassmorphic rounded-lg">
-                <button id="backToGallery" class="mb-6 glassmorphic text-sm font-semibold py-2 px-4 transition duration-150 ease-in-out inline-flex items-center rounded-lg" style="color: var(--accent-color);">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
-                    Back to Gallery
+            <section id="detailView" class="hidden p-4 sm:p-6 md:p-10 glassmorphic rounded-lg">
+                <button id="backToGallery" class="mb-4 sm:mb-6 glassmorphic text-sm font-semibold py-2 px-3 sm:px-4 transition duration-150 ease-in-out inline-flex items-center rounded-lg" style="color: var(--accent-color);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+                    Back
                 </button>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                     <div class="md:col-span-1 flex justify-center items-start">
-                        <div id="detailCardImageContainer" class="glassmorphic"> 
-                             <img id="detailCardImage" src="" alt="Card Image" 
+                        <div id="detailCardImageContainer" class="glassmorphic p-2 sm:p-2.5 w-full"> 
+                             <img id="detailCardImage" src="" alt="Card Image" class="mx-auto"
                                  onerror="this.onerror=null; this.src='https://placehold.co/400x560/e0e5ec/374151?text=Image+Not+Found'; this.parentElement.classList.add('flex', 'items-center', 'justify-center');">
                         </div>
                     </div>
                     <div class="md:col-span-2">
-                        <h2 id="detailCardName" class="text-3xl md:text-4xl font-bold mb-2" style="color: var(--text-primary);"></h2>
-                        <p id="detailCardType" class="text-xl font-semibold mb-6" style="color: var(--accent-color);"></p>
-                        <button id="detailAddToDeckBtn" class="mb-6 glassmorphic text-sm font-semibold py-2 px-4 transition duration-150 ease-in-out rounded-lg" style="color: var(--accent-color);">Add to Deck</button>
+                        <h2 id="detailCardName" class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2" style="color: var(--text-primary);"></h2>
+                        <p id="detailCardType" class="text-lg sm:text-xl font-semibold mb-3 sm:mb-6" style="color: var(--accent-color);"></p>
+                        <button id="detailAddToDeckBtn" class="mb-4 sm:mb-6 glassmorphic text-sm font-semibold py-2 px-3 sm:px-4 transition duration-150 ease-in-out rounded-lg w-full sm:w-auto" style="color: var(--accent-color);">Add to Deck</button>
                         
-                        <div id="detailCardTextSection" class="mb-6"> 
-                            <p id="detailCardText" class="leading-relaxed whitespace-pre-line" style="color: var(--text-secondary);"></p>
+                        <div id="detailCardTextSection" class="mb-4 sm:mb-6"> 
+                            <p id="detailCardText" class="leading-relaxed whitespace-pre-line text-sm sm:text-base" style="color: var(--text-secondary);"></p>
                         </div>
-                        <div id="detailCardSyntaxSection" class="mb-6"> 
-                            <div id="detailCardSyntax"> </div>
-                        </div>
-                        <div id="detailCardAttributesSection" class="mb-6"> 
-                            <h3 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">Attributes:</h3>
-                            <div id="attributeListContainer" class="attribute-list glassmorphic rounded-lg p-4">
+                        
+                        <div id="detailCardAttributesSection" class="mb-4 sm:mb-6 glassmorphic rounded-lg p-3 sm:p-4 md:p-6"> 
+                            <h3 class="text-md sm:text-lg font-semibold mb-2" style="color: var(--text-primary);">Code:</h3> <div id="attributeListContainer" class="attribute-list text-xs sm:text-sm"> 
+                            </div>
+                            <div id="detailCardSyntaxSection" class="mt-3 sm:mt-4"> 
+                                <div id="detailCardSyntax" class="syntax-chip-grid"> 
+                                </div>
                             </div>
                         </div>
-                        <p id="noDetailedInfo" class="italic hidden-section" style="color: var(--text-secondary);">Detailed information is not available.</p>
+                        <p id="noDetailedInfo" class="italic hidden-section text-sm sm:text-base" style="color: var(--text-secondary);">Detailed information is not available.</p>
                     </div>
                 </div>
-                <div class="mt-12">
-                    <h3 id="relatedCardsTitle" class="text-2xl font-semibold mb-6 border-b pb-2" style="color: var(--text-primary); border-color: rgba(128,128,128,0.2);"></h3>
-                    <div id="relatedCardsContainer" class="related-cards-container flex overflow-x-auto gap-4 pb-4"></div>
-                    <p id="noRelatedCards" class="text-center text-lg py-6 hidden" style="color: var(--text-secondary);">No other cards in this category.</p>
+                <div class="mt-8 sm:mt-12">
+                    <h3 id="relatedCardsTitle" class="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 border-b pb-2" style="color: var(--text-primary); border-color: rgba(128,128,128,0.2);"></h3>
+                    <div id="relatedCardsContainer" class="related-cards-container flex overflow-x-auto gap-3 sm:gap-4 pb-3 sm:pb-4"></div>
+                    <p id="noRelatedCards" class="text-center text-md sm:text-lg py-6 hidden" style="color: var(--text-secondary);">No other cards in this category.</p>
                 </div>
             </section>
+
+            <section id="rulesView" class="hidden p-4 sm:p-6 md:p-10 glassmorphic rounded-lg">
+                <button id="backToGalleryFromRules" class="mb-4 sm:mb-6 glassmorphic text-sm font-semibold py-2 px-3 sm:px-4 transition duration-150 ease-in-out inline-flex items-center rounded-lg" style="color: var(--accent-color);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+                    Back
+                </button>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-center" style="color: var(--accent-color);">How to Play Lumiverse</h1>
+                
+                <div id="rulesContentContainer" class="text-sm sm:text-base">
+                    </div>
+            </section>
         </main>
-        <footer class="mt-12 py-8 text-center glassmorphic rounded-t-lg" style="color: var(--text-secondary);">
-            <div class="theme-switch-wrapper inline-flex glassmorphic p-1 mb-4 rounded-full">
-                <span class="mr-2 text-sm">Theme:</span>
+
+        <footer class="mt-8 sm:mt-12 py-6 sm:py-8 text-center glassmorphic rounded-t-lg text-xs sm:text-sm" style="color: var(--text-secondary);">
+            <div class="theme-switch-wrapper inline-flex glassmorphic p-1 mb-3 sm:mb-4 rounded-full">
+                <span class="ml-2 sm:ml-3 mr-1 text-xs sm:text-sm">Theme:</span> 
                 <label class="theme-switch" for="themeToggleCheckbox" title="Toggle Dark Mode">
                     <input type="checkbox" id="themeToggleCheckbox">
-                    <span class="slider round"></span>
+                    <span class="slider round">
+                        <svg class="sun-icon theme-icon h-3 w-3 sm:h-4 sm:w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-12.66l-.707.707M4.04 19.96l-.707.707M21 12h-1M4 12H3m15.96-7.96l-.707-.707M4.747 4.042l-.707-.707" />
+                        </svg>
+                        <svg class="moon-icon theme-icon h-3 w-3 sm:h-4 sm:w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </span>
                 </label>
             </div>
             <p>&copy; <span id="currentYear"></span> Card Game Database. All rights reserved (concept).</p>
@@ -462,90 +263,65 @@
 
     <div id="onboardingModalOverlay" class="modal-overlay">
         <div id="onboardingModalContent" class="modal-content glassmorphic">
-            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--text-primary);">Create Your Account</h2>
-            
+            <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center" style="color: var(--text-primary);">Create Your Account</h2>
             <div id="onboardingStep1" class="onboarding-step active">
-                <h3 class="text-lg font-semibold mb-4" style="color: var(--text-secondary);">Step 1: Account Basics</h3>
-                <div>
-                    <label for="onboardingEmail" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Email</label>
-                    <input type="email" id="onboardingEmail" class="onboarding-input" placeholder="you@example.com">
-                </div>
-                <div>
-                    <label for="onboardingPassword" class="block text-sm font-medium mb-1 mt-4" style="color: var(--text-secondary);">Password</label>
-                    <input type="password" id="onboardingPassword" class="onboarding-input" placeholder="••••••••">
-                </div>
-                <div>
-                    <label for="onboardingConfirmPassword" class="block text-sm font-medium mb-1 mt-4" style="color: var(--text-secondary);">Confirm Password</label>
-                    <input type="password" id="onboardingConfirmPassword" class="onboarding-input" placeholder="••••••••">
-                </div>
-                <div class="mt-6 text-right">
-                    <button id="nextToStep2" class="onboarding-button">Next</button>
-                </div>
+                <h3 class="text-lg font-semibold mb-3 sm:mb-4" style="color: var(--text-secondary);">Step 1: Account Basics</h3>
+                <div><label for="onboardingEmail" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Email</label><input type="email" id="onboardingEmail" class="onboarding-input text-sm sm:text-base" placeholder="you@example.com"><p id="emailError" class="error-message"></p></div>
+                <div><label for="onboardingPassword" class="block text-sm font-medium mb-1 mt-3 sm:mt-4" style="color: var(--text-secondary);">Password</label><input type="password" id="onboardingPassword" class="onboarding-input text-sm sm:text-base" placeholder="••••••••"><p id="passwordError" class="error-message"></p></div>
+                <div><label for="onboardingConfirmPassword" class="block text-sm font-medium mb-1 mt-3 sm:mt-4" style="color: var(--text-secondary);">Confirm Password</label><input type="password" id="onboardingConfirmPassword" class="onboarding-input text-sm sm:text-base" placeholder="••••••••"><p id="confirmPasswordError" class="error-message"></p></div>
+                <div class="mt-4 sm:mt-6 text-right"><button id="nextToStep2" class="onboarding-button w-full sm:w-auto text-sm sm:text-base">Next</button></div>
             </div>
-
             <div id="onboardingStep2" class="onboarding-step">
-                <h3 class="text-lg font-semibold mb-4" style="color: var(--text-secondary);">Step 2: Your Profile</h3>
-                <div>
-                    <label for="onboardingUsername" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Username</label>
-                    <input type="text" id="onboardingUsername" class="onboarding-input" placeholder="YourCoolUsername">
-                </div>
-                <div class="mt-4">
-                    <label for="onboardingProfilePic" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Profile Picture (Optional)</label>
-                    <input type="file" id="onboardingProfilePic" class="onboarding-input" accept="image/*">
-                    <p class="text-xs mt-1" style="color: var(--text-secondary);">A developer would handle uploading this to a server.</p>
-                </div>
-                <div class="mt-6 flex justify-between">
-                    <button id="backToStep1" class="onboarding-button">Back</button>
-                    <button id="nextToStep3" class="onboarding-button">Next</button>
-                </div>
+                <h3 class="text-lg font-semibold mb-3 sm:mb-4" style="color: var(--text-secondary);">Step 2: Your Profile</h3>
+                <div><label for="onboardingUsername" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Username</label><input type="text" id="onboardingUsername" class="onboarding-input text-sm sm:text-base" placeholder="YourCoolUsername"><p id="usernameError" class="error-message"></p></div>
+                <div class="mt-3 sm:mt-4"><label for="onboardingProfilePic" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Profile Picture (Optional)</label><input type="file" id="onboardingProfilePic" class="onboarding-input text-sm sm:text-base" accept="image/*"><p class="text-xs mt-1" style="color: var(--text-secondary);">Conceptual: Server-side upload would be needed.</p></div>
+                <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-between gap-2"><button id="backToStep1" class="onboarding-button w-full sm:w-auto text-sm sm:text-base">Back</button><button id="nextToStep3" class="onboarding-button w-full sm:w-auto text-sm sm:text-base">Next</button></div>
             </div>
-
             <div id="onboardingStep3" class="onboarding-step">
-                <h3 class="text-lg font-semibold mb-4" style="color: var(--text-secondary);">Step 3: A Little More About You</h3>
-                <div>
-                    <label for="onboardingHometown" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Hometown</label>
-                    <input type="text" id="onboardingHometown" class="onboarding-input" placeholder="City, State/Country">
-                </div>
-                <div class="mt-6 flex justify-between">
-                    <button id="backToStep2" class="onboarding-button">Back</button>
-                    <button id="nextToStep4" class="onboarding-button">Next</button>
-                </div>
+                <h3 class="text-lg font-semibold mb-3 sm:mb-4" style="color: var(--text-secondary);">Step 3: A Little More About You</h3>
+                <div><label for="onboardingHometown" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Hometown</label><input type="text" id="onboardingHometown" class="onboarding-input text-sm sm:text-base" placeholder="City, State/Country"></div>
+                <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-between gap-2"><button id="backToStep2" class="onboarding-button w-full sm:w-auto text-sm sm:text-base">Back</button><button id="nextToStep4" class="onboarding-button w-full sm:w-auto text-sm sm:text-base">Next</button></div>
             </div>
-            
             <div id="onboardingStep4" class="onboarding-step">
-                <h3 class="text-lg font-semibold mb-4" style="color: var(--text-secondary);">Step 4: Which TCGs Do You Play?</h3>
-                <div id="tcgSurveyOptions" class="space-y-2 max-h-60 overflow-y-auto p-2 glassmorphic rounded-lg">
-                    </div>
-                <div class="mt-6 flex justify-between">
-                    <button id="backToStep3" class="onboarding-button">Back</button>
-                    <button id="finishOnboarding" class="onboarding-button">Finish Sign Up</button>
-                </div>
+                <h3 class="text-lg font-semibold mb-3 sm:mb-4" style="color: var(--text-secondary);">Step 4: Which TCGs Do You Play?</h3>
+                <div id="tcgSurveyOptions" class="space-y-2 max-h-48 sm:max-h-60 overflow-y-auto p-2 glassmorphic rounded-lg text-sm"></div>
+                <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-between gap-2"><button id="backToStep3" class="onboarding-button w-full sm:w-auto text-sm sm:text-base">Back</button><button id="finishOnboarding" class="onboarding-button w-full sm:w-auto text-sm sm:text-base">Finish Sign Up</button></div>
             </div>
-             <button id="closeOnboardingModal" class="absolute top-4 right-4 text-2xl" style="color: var(--text-secondary);" title="Close">&times;</button>
+            <button id="closeOnboardingModal" class="absolute top-2 right-2 sm:top-4 sm:right-4 text-xl sm:text-2xl" style="color: var(--text-secondary);" title="Close">&times;</button>
         </div>
     </div>
 
     <div id="deckModalOverlay" class="modal-overlay">
         <div id="deckModalContent" class="modal-content glassmorphic">
-            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--text-primary);">Your Deck</h2>
-            <div id="deckCardList" class="mb-6 max-h-96 overflow-y-auto space-y-3 p-2 glassmorphic rounded-lg">
-                <p class="text-center p-4" style="color: var(--text-secondary);">Your deck is empty. Add cards from the gallery!</p>
-            </div>
-            <div class="flex justify-between items-center mt-6">
-                <button id="downloadDeckCsv" class="onboarding-button">Download Deck (CSV)</button>
-                <div>
-                    <label for="importDeckCsvInput" class="onboarding-button cursor-pointer">Import Deck (CSV)</label>
-                    <input type="file" id="importDeckCsvInput" class="hidden" accept=".csv">
+            <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center" style="color: var(--text-primary);">Your Deck</h2>
+            <div id="deckCardList" class="mb-3 sm:mb-4 max-h-48 sm:max-h-60 overflow-y-auto space-y-2 sm:space-y-3 p-2 glassmorphic rounded-lg"><p class="text-center p-4 text-sm sm:text-base" style="color: var(--text-secondary);">Your deck is empty. Add cards from the gallery!</p></div>
+            
+            <div id="deckActions" class="mb-4 sm:mb-6">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-3 gap-2">
+                    <button id="downloadDeckCsv" class="onboarding-button text-xs py-1.5 px-3 w-full sm:w-auto">Download (CSV)</button>
+                    <div>
+                        <label for="importDeckCsvInput" class="onboarding-button text-xs py-1.5 px-3 cursor-pointer w-full sm:w-auto block text-center sm:inline-block">Import (CSV)</label>
+                        <input type="file" id="importDeckCsvInput" class="hidden" accept=".csv">
+                    </div>
+                </div>
+                <div id="saveDeckSection" class="hidden mt-3 sm:mt-4">
+                     <input type="text" id="deckNameInput" class="onboarding-input text-sm py-1.5" placeholder="Enter deck name...">
+                     <button id="saveCurrentDeckButton" class="onboarding-button w-full mt-2 text-sm py-1.5">Save Current Deck</button>
                 </div>
             </div>
-            <button id="closeDeckModal" class="absolute top-4 right-4 text-2xl" style="color: var(--text-secondary);" title="Close">&times;</button>
+
+            <div id="savedDecksSection" class="hidden">
+                <h3 class="text-md sm:text-lg font-semibold mb-2 sm:mb-3" style="color: var(--text-primary);">Saved Decks</h3>
+                <div id="savedDecksList" class="max-h-32 sm:max-h-40 overflow-y-auto space-y-2 p-2 glassmorphic rounded-lg">
+                    <p class="text-center p-2 text-xs sm:text-sm" style="color: var(--text-secondary);">No decks saved yet.</p>
+                </div>
+            </div>
+            <button id="closeDeckModal" class="absolute top-2 right-2 sm:top-4 sm:right-4 text-xl sm:text-2xl" style="color: var(--text-secondary);" title="Close">&times;</button>
         </div>
     </div>
 
-
     <script>
-        // --- CSV Data ---
-        // Original CSV for detailed card text, effects, and attributes
+        // --- CSV Data ( 그대로 유지 ) ---
         const csvDataOld = `
 card_name,card_type,text,effect_syntax,image_file,max_bpm,per_slot_charge,datalyth_slots,stack_damage,generic_value,num_effects,effect_types_list,has_condition,has_timing
 Luc Loic,Actor Card,Move Luc Loic to the Stage. At the beginning of each of your turns if Luc's heart is zero you may add 100 charge to an active datalyth on your side of the Stage.,"[MOVE:SELF,STAGE]; [ADD_CHARGE:DATALYTH:SELF:ACTIVE,100?IF_HR:SELF,==,0|BEGIN_TURN]",/card_art/Actor Card: Luc Loic.PNG,170,,,,2,"ADD_CHARGE,MOVE",TRUE,TRUE
@@ -614,8 +390,6 @@ Glaussiere Io,Supporter Card,Move Glaussiere to the Stage and begin to support a
 Hue Io,Supporter Card,Move Hue to the Stage and begin to support any Actor there. At the beginning of each of your turns add 100 power to a datalyth active on your side of the stage (if any).,"[MOVE:SELF,STAGE]; [ATTACH:SELF,ACTOR:SELF:CHOICE]; [ADD_CHARGE:DATALYTH:SELF:ACTIVE:CHOICE,100|BEGIN_TURN]",/card_art/Supporter Card: Hue Io.PNG,,,,,,3,"ADD_CHARGE,ATTACH,MOVE",FALSE,TRUE
 Seraph,Supporter Card,Move Seraph to the Stage and begin to support any Actor there. Double the charge gained by your datalyths for three turns then discard this card.,"[MOVE:SELF,STAGE]; [ATTACH:SELF,ACTOR:SELF:CHOICE]; [MODIFY_CHARGE:GAIN:DATALYTH:SELF:ALL,DOUBLE|DURATION:3]; [DISCARD:SELF|AFTER:DURATION]",/card_art/Supporter Card: Seraph.PNG,,,,,20,4,"ATTACH,DISCARD,MODIFY_CHARGE,MOVE",FALSE,TRUE
 `;
-
-        // New CSV with direct image links (cards-13.csv)
         const csvDataWithImageLinks = `
 image,label,item-count,item-key
 https://firebasestorage.googleapis.com/v0/b/playingcardsio.appspot.com/o/ab44d36b-d3d9-49c7-9840-5b15de6956d0.jpeg?alt=media&token=24ef31b9-1553-4b58-8a45-fd216c89d781,Actor Card: Luc Loic.jpeg,0,type-a068b72c-a6c8-4e21-824d-027d6be4ae12
@@ -688,10 +462,11 @@ https://firebasestorage.googleapis.com/v0/b/playingcardsio.appspot.com/o/b85c899
         // --- DOM Elements ---
         const galleryView = document.getElementById('galleryView');
         const detailView = document.getElementById('detailView');
+        const rulesView = document.getElementById('rulesView'); 
         const cardGrid = document.getElementById('cardGrid');
         const noResultsP = document.getElementById('noResults');
         const searchInput = document.getElementById('search');
-        const cardTypeFiltersContainer = document.getElementById('cardTypeFiltersContainer');
+        const cardTypeFilterDropdown = document.getElementById('cardTypeFilterDropdown');
         
         const detailCardImage = document.getElementById('detailCardImage');
         const detailCardName = document.getElementById('detailCardName');
@@ -706,40 +481,47 @@ https://firebasestorage.googleapis.com/v0/b/playingcardsio.appspot.com/o/b85c899
         const detailCardSyntax = document.getElementById('detailCardSyntax');
 
         const backToGalleryButton = document.getElementById('backToGallery');
+        const backToGalleryFromRulesButton = document.getElementById('backToGalleryFromRules'); 
+        const howToPlayButton = document.getElementById('howToPlayButton'); 
+
         const relatedCardsContainer = document.getElementById('relatedCardsContainer');
         const relatedCardsTitle = document.getElementById('relatedCardsTitle');
         const noRelatedCardsP = document.getElementById('noRelatedCards');
         const themeToggle = document.getElementById('themeToggleCheckbox');
+        
         const signUpButton = document.getElementById('signUpButton');
+        const logoutButton = document.getElementById('logoutButton');
+        const userWelcomeMessage = document.getElementById('userWelcomeMessage');
+
         const onboardingModalOverlay = document.getElementById('onboardingModalOverlay');
-        const onboardingModalContent = document.getElementById('onboardingModalContent');
         const closeOnboardingModalButton = document.getElementById('closeOnboardingModal');
         const deckIconButton = document.getElementById('deckIcon');
         const deckModalOverlay = document.getElementById('deckModalOverlay');
-        const deckModalContent = document.getElementById('deckModalContent');
         const closeDeckModalButton = document.getElementById('closeDeckModal');
         const deckCardList = document.getElementById('deckCardList');
         const downloadDeckCsvButton = document.getElementById('downloadDeckCsv');
         const importDeckCsvInput = document.getElementById('importDeckCsvInput');
-        const importDeckCsvLabel = document.querySelector('label[for="importDeckCsvInput"]');
+        const saveDeckSection = document.getElementById('saveDeckSection');
+        const deckNameInput = document.getElementById('deckNameInput');
+        const saveCurrentDeckButton = document.getElementById('saveCurrentDeckButton');
+        const savedDecksSection = document.getElementById('savedDecksSection');
+        const savedDecksList = document.getElementById('savedDecksList');
 
 
         const onboardingSteps = [
-            document.getElementById('onboardingStep1'),
-            document.getElementById('onboardingStep2'),
-            document.getElementById('onboardingStep3'),
-            document.getElementById('onboardingStep4')
+            document.getElementById('onboardingStep1'), document.getElementById('onboardingStep2'),
+            document.getElementById('onboardingStep3'), document.getElementById('onboardingStep4')
         ];
         const tcgSurveyOptionsContainer = document.getElementById('tcgSurveyOptions');
-
-
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
         let allCards = [];
         let cardTypes = new Set();
         let currentDeck = []; 
+        let currentUser = null; 
 
-        const syntaxIcons = {
+        // --- Syntax Parsing and Rendering (Icons and Mappings remain the same) ---
+        const syntaxIcons = { 
             ACTION: `<svg class="syntax-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" /></svg>`,
             TARGET: `<svg class="syntax-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>`,
             DETAILS: `<svg class="syntax-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" /></svg>`,
@@ -748,7 +530,6 @@ https://firebasestorage.googleapis.com/v0/b/playingcardsio.appspot.com/o/b85c899
             COST: `<svg class="syntax-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>`,
             GENERIC_EFFECT: `<svg class="syntax-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
         };
-        
         const actionMappings = { 
             DEFAULT: { simpleText: (action) => action.replace(/_/g, ' '), icon: syntaxIcons.GENERIC_EFFECT, tileClass: '' },
             MOVE: { simpleText: () => "Move", icon: syntaxIcons.ACTION, tileClass: 'tile-action' },
@@ -782,149 +563,55 @@ https://firebasestorage.googleapis.com/v0/b/playingcardsio.appspot.com/o/b85c899
             SELECT: { simpleText: () => "Select", icon: syntaxIcons.ACTION, tileClass: 'tile-action' },
         };
         
-        function normalizeText(text) {
-            if (!text) return '';
-            return text.toLowerCase().replace(/[\s-:]/g, ''); 
-        }
-
-        function createCardKey(name, type) {
-            return `${normalizeText(type)}_${normalizeText(name)}`;
-        }
+        function normalizeText(text) { if (!text) return ''; return text.toLowerCase().replace(/[\s-:]/g, ''); }
+        function createCardKey(name, type) { return `${normalizeText(type)}_${normalizeText(name)}`; }
         
-        function parseAndMergeCSV() {
+        // --- CSV Parsing and Merging ---
+        function parseAndMergeCSV() { 
             const imageMap = {};
-            const linesNew = csvDataWithImageLinks.trim().split('\n').slice(1); 
+            const linesNew = csvDataWithImageLinks.trim().split('\n').slice(1);
             linesNew.forEach(line => {
-                const values = line.split(',');
-                const imageUrl = (values[0] || '').trim();
-                
-                if (!imageUrl.startsWith('https://')) { 
-                    return; 
-                }
-
-                const label = (values[1] || '').trim().replace(/\.(jpeg|png)$/i, ''); 
-                const itemKey = (values[3] || '').trim();
-
-                let cardNameFromLabel = label;
-                let cardTypeFromLabel = "Unknown Type";
+                const values = line.split(','); const imageUrl = (values[0] || '').trim();
+                if (!imageUrl.startsWith('https://')) { return; } // Skip if not a valid URL
+                const label = (values[1] || '').trim().replace(/\.(jpeg|png)$/i, ''); const itemKey = (values[3] || '').trim();
+                let cardNameFromLabel = label; let cardTypeFromLabel = "Unknown Type";
                 const typeSeparatorIndex = label.indexOf(':');
-                if (typeSeparatorIndex !== -1) {
-                    cardTypeFromLabel = label.substring(0, typeSeparatorIndex).trim();
-                    cardNameFromLabel = label.substring(typeSeparatorIndex + 1).trim();
-                } else if (label.toLowerCase() === "card back") { 
-                    cardNameFromLabel = "Card Back";
-                    cardTypeFromLabel = "Other"; 
-                }
-
-                if (cardTypeFromLabel === "Mind Card") cardTypeFromLabel = "Care Card";
-                else if (cardTypeFromLabel === "Lumiverse Card") cardTypeFromLabel = "Other";
-                else if (cardTypeFromLabel === "Response Card") cardTypeFromLabel = "Script Card";
-
+                if (typeSeparatorIndex !== -1) { cardTypeFromLabel = label.substring(0, typeSeparatorIndex).trim(); cardNameFromLabel = label.substring(typeSeparatorIndex + 1).trim(); } 
+                else if (label.toLowerCase() === "card back") { cardNameFromLabel = "Card Back"; cardTypeFromLabel = "Other"; }
+                // Normalize card types for consistency
+                if (cardTypeFromLabel === "Mind Card") cardTypeFromLabel = "Care Card"; else if (cardTypeFromLabel === "Lumiverse Card") cardTypeFromLabel = "Other"; else if (cardTypeFromLabel === "Response Card") cardTypeFromLabel = "Script Card";
                 const key = createCardKey(cardNameFromLabel, cardTypeFromLabel);
                 imageMap[key] = { url: imageUrl, id: itemKey, name: cardNameFromLabel, type: cardTypeFromLabel };
             });
-
-            const linesOld = csvDataOld.trim().split('\n');
-            const headersOld = linesOld[0].split(',').map(h => h.trim());
-            const mergedCards = [];
-            const tempCardTypes = new Set(); 
-
+            const linesOld = csvDataOld.trim().split('\n'); const headersOld = linesOld[0].split(',').map(h => h.trim());
+            const mergedCards = []; const tempCardTypes = new Set();
             linesOld.slice(1).forEach((line, index) => {
-                const values = line.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
-                const card = {};
-                headersOld.forEach((header, i) => {
-                    let value = (values[i] || '').trim();
-                    if (value.startsWith('"') && value.endsWith('"')) {
-                        value = value.substring(1, value.length - 1).replace(/""/g, '"');
-                    }
-                    card[header] = value;
-                });
-                
-                if (card.card_name === "Cylas" || card.card_name === "Felicity Feldt") {
-                    return;
-                }
-
+                const values = line.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || []; const card = {};
+                headersOld.forEach((header, i) => { let value = (values[i] || '').trim(); if (value.startsWith('"') && value.endsWith('"')) { value = value.substring(1, value.length - 1).replace(/""/g, '"'); } card[header] = value; });
+                if (card.card_name === "Cylas" || card.card_name === "Felicity Feldt") { return; } // Skip specific cards if needed
                 let originalType = card.card_type;
-                if (originalType === "Mind Card") card.card_type = "Care Card";
-                else if (originalType === "Lumiverse Card") card.card_type = "Other";
-                else if (card.card_name === "Card Back") card.card_type = "Other"; 
-                else if (originalType === "Response Card") card.card_type = "Script Card";
-
-                const key = createCardKey(card.card_name, card.card_type);
-                let imageData = imageMap[key];
-
-                if (!imageData) {
-                    const normalizedCardName = normalizeText(card.card_name);
-                    for (const mapKey in imageMap) {
-                        if (mapKey.endsWith(`_${normalizedCardName}`)) {
-                            const imageMapEntryType = imageMap[mapKey].type;
-                            if (imageMapEntryType === card.card_type) { 
-                                imageData = imageMap[mapKey];
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (card.card_name === "Fount of Blessing" && !imageData) imageData = imageMap[createCardKey("Font of Blessing", card.card_type)];
-                if (card.card_name === "Spacewalk" && !imageData) imageData = imageMap[createCardKey("Soacewalk", card.card_type)];
-                if (card.card_name === "Desparate Plea" && !imageData) imageData = imageMap[createCardKey("Desperate Plea", card.card_type)];
+                if (originalType === "Mind Card") card.card_type = "Care Card"; else if (originalType === "Lumiverse Card") card.card_type = "Other"; else if (card.card_name === "Card Back") card.card_type = "Other"; else if (originalType === "Response Card") card.card_type = "Script Card";
+                const key = createCardKey(card.card_name, card.card_type); let imageData = imageMap[key];
+                // Fallback for slight name mismatches
+                if (!imageData) { const normalizedCardName = normalizeText(card.card_name); for (const mapKey in imageMap) { if (mapKey.endsWith(`_${normalizedCardName}`)) { const imageMapEntryType = imageMap[mapKey].type; if (imageMapEntryType === card.card_type) { imageData = imageMap[mapKey]; break; } } } }
+                // Specific known mismatches
+                if (card.card_name === "Fount of Blessing" && !imageData) imageData = imageMap[createCardKey("Font of Blessing", card.card_type)]; if (card.card_name === "Spacewalk" && !imageData) imageData = imageMap[createCardKey("Soacewalk", card.card_type)]; if (card.card_name === "Desparate Plea" && !imageData) imageData = imageMap[createCardKey("Desperate Plea", card.card_type)];
                 
-                if (imageData) {
-                    card.image_url = imageData.url;
-                    card.id = imageData.id; 
-                } else {
-                    card.image_url = null; 
-                    card.id = `card-old-${index}`; 
-                }
-                
-                card.text = card.text || "";
-                card.effect_syntax = card.effect_syntax || "";
-
-                if (card.card_type && 
-                    originalType !== "Mind Card" && 
-                    originalType !== "Lumiverse Card" && 
-                    originalType !== "Response Card") {
-                     tempCardTypes.add(card.card_type);
-                } else if (card.card_type === "Care Card" || card.card_type === "Script Card" || card.card_type === "Other") {
-                    tempCardTypes.add(card.card_type);
-                }
+                if (imageData) { card.image_url = imageData.url; card.id = imageData.id; } else { card.image_url = null; card.id = `card-old-${index}`; }
+                card.text = card.text || ""; card.effect_syntax = card.effect_syntax || "";
+                if (card.card_type && originalType !== "Mind Card" && originalType !== "Lumiverse Card" && originalType !== "Response Card") { tempCardTypes.add(card.card_type); } else if (card.card_type === "Care Card" || card.card_type === "Script Card" || card.card_type === "Other") { tempCardTypes.add(card.card_type); }
                 mergedCards.push(card);
             });
-            
-            Object.values(imageMap).forEach(imageData => {
-                if (!mergedCards.some(card => card.id === imageData.id)) {
-                    let cardTypeFromImageMap = imageData.type; 
-
-                    mergedCards.push({
-                        id: imageData.id,
-                        card_name: imageData.name,
-                        card_type: cardTypeFromImageMap,
-                        image_url: imageData.url,
-                        text: "", 
-                        effect_syntax: "", 
-                    });
-                     if (cardTypeFromImageMap && 
-                        cardTypeFromImageMap !== "Mind Card" && 
-                        cardTypeFromImageMap !== "Lumiverse Card" && 
-                        cardTypeFromImageMap !== "Response Card") {
-                        tempCardTypes.add(cardTypeFromImageMap);
-                    }
-                }
-            });
-
-            cardTypes = tempCardTypes;
-             if (!cardTypes.has("Other") && mergedCards.some(c => c.card_type === "Other")) {
-                cardTypes.add("Other"); 
-            }
-            ["Mind Card", "Lumiverse Card", "Response Card"].forEach(removedType => cardTypes.delete(removedType));
-
+            // Add any cards from imageMap not found in old CSV
+            Object.values(imageMap).forEach(imageData => { if (!mergedCards.some(card => card.id === imageData.id)) { let cardTypeFromImageMap = imageData.type; mergedCards.push({ id: imageData.id, card_name: imageData.name, card_type: cardTypeFromImageMap, image_url: imageData.url, text: "", effect_syntax: "" }); if (cardTypeFromImageMap && cardTypeFromImageMap !== "Mind Card" && cardTypeFromImageMap !== "Lumiverse Card" && cardTypeFromImageMap !== "Response Card") { tempCardTypes.add(cardTypeFromImageMap); } } });
+            cardTypes = tempCardTypes; if (!cardTypes.has("Other") && mergedCards.some(c => c.card_type === "Other")) { cardTypes.add("Other"); }
+            ["Mind Card", "Lumiverse Card", "Response Card"].forEach(removedType => cardTypes.delete(removedType)); // Remove obsolete types
             return mergedCards;
         }
         
-        function titleCase(str, preserveCaps = false) {
+        function titleCase(str, preserveCaps = false) { 
             if (!str) return '';
-            if (preserveCaps) return str.replace(/_/g, ' '); 
-
+            if (preserveCaps) return str.replace(/_/g, ' ');
             return str.toLowerCase().split('_').map(word => {
                 if (["SELF", "OPP", "ANY", "ALL", "STAGE", "DECK", "HAND", "ITEM", "DATALYTH", "ACTOR", "SUPPORTER", "SCRIPT", "SOURCE"].includes(word.toUpperCase())) {
                     return word.toUpperCase();
@@ -932,24 +619,19 @@ https://firebasestorage.googleapis.com/v0/b/playingcardsio.appspot.com/o/b85c899
                 return word.charAt(0).toUpperCase() + word.slice(1);
             }).join(' ');
         }
-        
-        function parseSingleEffect(effectStr) {
+
+        function parseSingleEffect(effectStr) { 
             if (!effectStr) return null;
-            effectStr = effectStr.substring(1, effectStr.length - 1); 
-            let mainPart = effectStr;
-            let conditionString = null;
-            let timingString = null;
+            effectStr = effectStr.substring(1, effectStr.length - 1); // Remove brackets
+            let mainPart = effectStr; let conditionString = null; let timingString = null;
+            // Split by timing first, then condition
             if (mainPart.includes('|')) { [mainPart, timingString] = mainPart.split('|', 2); }
             if (mainPart.includes('?')) { [mainPart, conditionString] = mainPart.split('?', 2); }
-            
             const parts = mainPart.split(':').map(s => s.trim());
-            const actionKey = parts[0].toUpperCase(); 
+            const actionKey = parts[0].toUpperCase();
             const actionInfo = actionMappings[actionKey] || actionMappings.DEFAULT;
-            
-            let params = parts.slice(1);
-            let targetChipText = null;
-            let detailsChipText = null;
-
+            let params = parts.slice(1); let targetChipText = null; let detailsChipText = null;
+            // Logic for different action keys to format text (remains same as previous)
             if (actionKey === "COST") {
                 targetChipText = `Pay ${titleCase(params[0] || '', true)}`;
                 if (params[1]) detailsChipText = `Amount: <strong>${titleCase(params[1], true)}</strong>`;
@@ -973,607 +655,466 @@ https://firebasestorage.googleapis.com/v0/b/playingcardsio.appspot.com/o/b85c899
                 if (params[1]) detailsChipText = `"${params.slice(1).join(': ')}"`;
             } else if (actionKey === "REAL_ACTION") {
                 if (params[1]) detailsChipText = `Details: ${titleCase(params.slice(1).join(', '), true)}`;
-            } else if (params.length > 0) { 
+            } else if (params.length > 0) {
                 targetChipText = titleCase(params[0], true);
                 if (params.length > 1) {
                     detailsChipText = params.slice(1).map(p => titleCase(p, true).replace(/(\d+)/g, '<strong>$1</strong>')).join(', ');
                 }
             }
-            
             return {
                 action: { text: actionInfo.simpleText(mainPart), icon: actionInfo.icon, tileClass: actionInfo.tileClass },
-                target: targetChipText,
-                details: detailsChipText,
-                condition: conditionString ? `Only if ${conditionString.replace(/_/g, ' ').replace(/,/g, ', ').replace(/==/g, ' is ').replace(/>=/g, ' is or more than ').replace(/<=/g, ' is or less than ').replace(/>/g, ' is more than ').replace(/</g, ' is less than ')}` : null,
+                target: targetChipText, details: detailsChipText,
+                condition: conditionString ? `Only if ${conditionString.replace(/_/g, ' ').replace(/,/g, ', ').replace(/==/g, ' is ').replace(/>=/g, ' >= ').replace(/<=/g, ' <= ').replace(/>/g, ' > ').replace(/</g, ' < ')}` : null,
                 timing: timingString ? `When: ${titleCase(timingString.replace(/:/g, ' - ').replace(/_/g, ' '), true)}` : null,
-                cost: actionKey === "COST" ? `${targetChipText} ${detailsChipText || ''}`.trim() : null 
+                cost: actionKey === "COST" ? `${targetChipText} ${detailsChipText || ''}`.trim() : null
             };
         }
-
-        function parseAllEffects(syntaxString) {
+        function parseAllEffects(syntaxString) { 
             if (!syntaxString || syntaxString.trim() === '') return [];
             return syntaxString.split(';').map(s => s.trim()).filter(s => s.length > 1 && s.startsWith('[') && s.endsWith(']')).map(parseSingleEffect).filter(effect => effect !== null);
         }
 
-        function renderEffectSyntax(effectsArray, container) { 
+        function renderEffectSyntax(effectsArray, container) {
             container.innerHTML = ''; 
-            if (!effectsArray || effectsArray.length === 0) { 
-                const p = document.createElement('p'); 
-                p.textContent = 'No specific effects listed for this card.'; 
-                p.className = 'italic'; 
-                p.style.color = 'var(--text-secondary)';
-                container.appendChild(p); return; 
-            } 
-            effectsArray.forEach(effect => { 
-                const effectBlock = document.createElement('div');
-                effectBlock.className = 'syntax-effect-block glassmorphic rounded-lg';
-
-                const chipGrid = document.createElement('div');
-                chipGrid.className = 'syntax-chip-grid';
-
-                const actionChip = document.createElement('div');
-                actionChip.className = `syntax-tile ${effect.action.tileClass}`; 
-                actionChip.innerHTML = `<span>${effect.action.text}</span>${effect.action.icon}`;
-                chipGrid.appendChild(actionChip);
-
-                if (effect.cost) {
-                    const costChip = document.createElement('div');
-                    costChip.className = 'syntax-tile tile-cost';
-                    costChip.innerHTML = `<span>${effect.cost}</span>${syntaxIcons.COST}`;
-                    chipGrid.appendChild(costChip);
-                }
-
-                if (effect.target && !effect.cost) {
-                    const targetChip = document.createElement('div');
-                    targetChip.className = 'syntax-tile tile-target';
-                    targetChip.innerHTML = `<span>${effect.target}</span>${syntaxIcons.TARGET}`;
-                    chipGrid.appendChild(targetChip);
-                }
-
-                if (effect.details && !effect.cost) {
-                    const detailsChip = document.createElement('div');
-                    detailsChip.className = 'syntax-tile tile-details';
-                    detailsChip.innerHTML = `<span>${effect.details}</span>${syntaxIcons.DETAILS}`;
-                    chipGrid.appendChild(detailsChip);
-                }
-                
-                if (effect.condition) {
-                    const conditionChip = document.createElement('div');
-                    conditionChip.className = 'syntax-tile tile-condition';
-                    conditionChip.innerHTML = `<span>${effect.condition}</span>${syntaxIcons.CONDITION}`;
-                    chipGrid.appendChild(conditionChip);
-                }
-
-                if (effect.timing) {
-                    const timingChip = document.createElement('div');
-                    timingChip.className = 'syntax-tile tile-timing';
-                    timingChip.innerHTML = `<span>${effect.timing}</span>${syntaxIcons.TIMING}`;
-                    chipGrid.appendChild(timingChip);
-                }
-                
-                effectBlock.appendChild(chipGrid);
-                container.appendChild(effectBlock); 
-            }); 
+            if (!effectsArray || effectsArray.length === 0) {
+                const p = document.createElement('p'); p.textContent = 'No specific effects listed.'; p.className = 'italic text-xs sm:text-sm'; p.style.color = 'var(--text-secondary)';
+                container.appendChild(p); return;
+            }
+            effectsArray.forEach(effect => {
+                const effectTile = document.createElement('div'); effectTile.className = `syntax-tile ${effect.action.tileClass}`;
+                const textContentDiv = document.createElement('div'); textContentDiv.className = 'syntax-tile-text-content text-xs sm:text-sm'; // Adjusted font size
+                let fullEffectText = effect.action.text;
+                if (effect.target) fullEffectText += `: ${effect.target}`;
+                if (effect.details) fullEffectText += ` (${effect.details})`;
+                if (effect.cost) fullEffectText = effect.cost; 
+                textContentDiv.innerHTML = fullEffectText; 
+                if (effect.condition) { const conditionSpan = document.createElement('span'); conditionSpan.className = 'condition-text text-xs'; conditionSpan.textContent = effect.condition; textContentDiv.appendChild(conditionSpan); }
+                if (effect.timing) { const timingSpan = document.createElement('span'); timingSpan.className = 'timing-text text-xs'; timingSpan.textContent = effect.timing; textContentDiv.appendChild(timingSpan); }
+                effectTile.appendChild(textContentDiv); effectTile.innerHTML += effect.action.icon; 
+                container.appendChild(effectTile);
+            });
         }
 
-        function renderCardThumbnail(card, isRelated = false) {
+        // --- Card Rendering ---
+        function renderCardThumbnail(card, isRelated = false) { 
             const cardDiv = document.createElement('div');
-            cardDiv.className = `card-thumbnail cursor-pointer ${isRelated ? 'min-w-[160px] max-w-[160px] sm:min-w-[180px] sm:max-w-[180px]' : ''}`;
-            cardDiv.dataset.cardId = card.id; 
-            
+            cardDiv.className = `card-thumbnail cursor-pointer ${isRelated ? 'min-w-[120px] max-w-[120px] sm:min-w-[150px] sm:max-w-[150px]' : ''}`; // Adjusted size for related cards
+            cardDiv.dataset.cardId = card.id;
             const imageSrc = card.image_url || `https://placehold.co/250x350/e0e5ec/374151?text=${encodeURIComponent(card.card_name ? card.card_name.substring(0,15) : 'Card')}`;
             const placeholderUrl = `https://placehold.co/250x350/e0e5ec/374151?text=${encodeURIComponent(card.card_name ? card.card_name.substring(0,15) : 'Card')}`;
-
-            // Add to Deck button - moved to the content section
-            const addToDeckButton = `
-                <button class="add-to-deck-btn p-1.5 glassmorphic rounded-full" title="Add to Deck" data-card-id="${card.id}" style="margin-left: auto;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" style="color: var(--accent-color);">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                    </svg>
-                </button>`;
-
-            cardDiv.innerHTML = `
-                <div class="glassmorphic overflow-hidden relative"> 
-                    <div class="w-full card-thumbnail-image-container"> 
-                         <img src="${imageSrc}" alt="${card.card_name || 'Card'}" 
-                              onerror="this.onerror=null; this.src='${placeholderUrl}';">
-                    </div>
-                    <div class="p-3 card-thumbnail-content flex justify-between items-center"> 
-                        <div>
-                            <h3 class="text-sm font-semibold truncate" title="${card.card_name || 'N/A'}" style="color: var(--text-primary);">${card.card_name || 'N/A'}</h3>
-                            <p class="text-xs" style="color: var(--accent-color);">${card.card_type || 'N/A'}</p> 
-                        </div>
-                        ${!isRelated ? addToDeckButton : ''} 
-                    </div>
-                </div>
-            `;
-            cardDiv.addEventListener('click', (e) => {
-                if (e.target.closest('.add-to-deck-btn')) {
-                    return;
-                }
-                showDetailView(card.id);
-            });
-            
+            const addToDeckButton = `<button class="add-to-deck-btn p-1 sm:p-1.5 glassmorphic rounded-full" title="Add to Deck" data-card-id="${card.id}" style="margin-left: auto;"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="currentColor" style="color: var(--accent-color);"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg></button>`;
+            cardDiv.innerHTML = `<div class="glassmorphic overflow-hidden relative rounded-lg"><div class="w-full card-thumbnail-image-container"><img src="${imageSrc}" alt="${card.card_name || 'Card'}" onerror="this.onerror=null; this.src='${placeholderUrl}';"></div><div class="p-2 sm:p-3 card-thumbnail-content flex justify-between items-center"><div><h3 class="text-xs sm:text-sm font-semibold truncate" title="${card.card_name || 'N/A'}" style="color: var(--text-primary);">${card.card_name || 'N/A'}</h3><p class="text-xs" style="color: var(--accent-color);">${card.card_type || 'N/A'}</p></div>${!isRelated ? addToDeckButton : ''}</div></div>`;
+            cardDiv.addEventListener('click', (e) => { if (e.target.closest('.add-to-deck-btn')) { return; } showDetailView(card.id); });
             const btn = cardDiv.querySelector('.add-to-deck-btn');
-            if (btn) {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation(); 
-                    addCardToDeck(card.id);
-                });
-            }
+            if (btn) { btn.addEventListener('click', (e) => { e.stopPropagation(); addCardToDeck(card.id); }); }
             return cardDiv;
         }
-
-
-        function renderGallery(cardsToDisplay) {
+        function renderGallery(cardsToDisplay) { 
             cardGrid.innerHTML = '';
-            if (cardsToDisplay.length === 0) {
-                noResultsP.classList.remove('hidden');
-            } else {
-                noResultsP.classList.add('hidden');
-                cardsToDisplay.forEach(card => cardGrid.appendChild(renderCardThumbnail(card)));
-            }
+            if (cardsToDisplay.length === 0) { noResultsP.classList.remove('hidden'); } 
+            else { noResultsP.classList.add('hidden'); cardsToDisplay.forEach(card => cardGrid.appendChild(renderCardThumbnail(card))); }
         }
-        
-        function renderCardDetail(card) {
+        function renderCardDetail(card) { 
             const detailImageEl = document.getElementById('detailCardImage');
             const imageSrcToLoad = card.image_url || `https://placehold.co/400x560/e0e5ec/374151?text=${encodeURIComponent(card.card_name || 'Card')}`;
-            
             const detailImageContainer = detailImageEl.parentElement; 
-            detailImageContainer.classList.remove('flex', 'items-center', 'justify-center');
-
-            detailImageEl.src = imageSrcToLoad;
-            detailImageEl.alt = card.card_name || 'Card Image';
-            
+            detailImageContainer.classList.remove('flex', 'items-center', 'justify-center'); 
+            detailImageEl.src = imageSrcToLoad; detailImageEl.alt = card.card_name || 'Card Image';
             detailCardName.textContent = card.card_name || "N/A";
             detailCardType.textContent = card.card_type || "N/A";
-
-            if(detailAddToDeckBtn) { 
-                detailAddToDeckBtn.dataset.cardId = card.id; 
-                detailAddToDeckBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    addCardToDeck(card.id);
-                };
-            }
-
+            if(detailAddToDeckBtn) { detailAddToDeckBtn.dataset.cardId = card.id; detailAddToDeckBtn.onclick = (e) => { e.stopPropagation(); addCardToDeck(card.id); }; }
             const hasDetailedText = card.text && card.text.trim() !== "";
             const hasSyntax = card.effect_syntax && card.effect_syntax.trim() !== "";
-            
-            const attributesData = { 
-                "Max BPM": card.max_bpm, "Per Slot Charge": card.per_slot_charge,
-                "Datalyth Slots": card.datalyth_slots, "Stack Damage": card.stack_damage,
-                "Generic Value": card.generic_value, "Number of Effects": card.num_effects,
-                "Effect Types": card.effect_types_list ? card.effect_types_list.replace(/,/g, ', ') : '',
-                "Has Condition?": card.has_condition === 'TRUE' ? 'Yes' : (card.has_condition === 'FALSE' ? 'No' : ''),
-                "Has Timing?": card.has_timing === 'TRUE' ? 'Yes' : (card.has_timing === 'FALSE' ? 'No' : '')
-            };
-            let hasAnyAttributeData = false;
-            attributeListContainer.innerHTML = ''; 
-
+            const attributesData = { "Max BPM": card.max_bpm, "Per Slot Charge": card.per_slot_charge, "Datalyth Slots": card.datalyth_slots, "Stack Damage": card.stack_damage, "Generic Value": card.generic_value, "Number of Effects": card.num_effects, "Effect Types": card.effect_types_list ? card.effect_types_list.replace(/,/g, ', ') : '', "Has Condition?": card.has_condition === 'TRUE' ? 'Yes' : (card.has_condition === 'FALSE' ? 'No' : ''), "Has Timing?": card.has_timing === 'TRUE' ? 'Yes' : (card.has_timing === 'FALSE' ? 'No' : '') };
+            let hasAnyAttributeData = false; attributeListContainer.innerHTML = '';
             for (const [key, value] of Object.entries(attributesData)) {
-                if (value && String(value).trim() !== '') { 
-                    hasAnyAttributeData = true;
-                    const attrDiv = document.createElement('div');
-                    attrDiv.innerHTML = `// ${key}: <strong>${value}</strong>`;
-                    attributeListContainer.appendChild(attrDiv);
-                }
+                if (value && String(value).trim() !== '') { hasAnyAttributeData = true; const attrDiv = document.createElement('div'); attrDiv.innerHTML = `// ${key}: <strong>${value}</strong>`; attributeListContainer.appendChild(attrDiv); }
             }
-
             detailCardTextSection.classList.toggle('hidden-section', !hasDetailedText);
-            detailCardSyntaxSection.classList.toggle('hidden-section', !hasSyntax); // Show syntax section again
-            
-            detailCardAttributesSection.classList.toggle('hidden-section', !hasAnyAttributeData); 
+            detailCardAttributesSection.classList.toggle('hidden-section', !hasAnyAttributeData && !hasSyntax); 
             noDetailedInfoP.classList.toggle('hidden-section', hasDetailedText || hasSyntax || hasAnyAttributeData);
-
             detailCardText.textContent = hasDetailedText ? card.text : "";
             
+            const syntaxParentSection = document.getElementById('detailCardSyntaxSection'); 
             if (hasSyntax) {
+                syntaxParentSection.classList.remove('hidden-section');
                 const parsedEffects = parseAllEffects(card.effect_syntax);
-                renderEffectSyntax(parsedEffects, detailCardSyntax);
+                renderEffectSyntax(parsedEffects, detailCardSyntax); 
             } else {
-                 detailCardSyntax.innerHTML = '<p class="italic" style="color: var(--text-secondary);">No effect syntax available.</p>'; 
+                syntaxParentSection.classList.add('hidden-section');
+                detailCardSyntax.innerHTML = ''; 
             }
-            
             renderRelatedCards(card.card_type, card.id);
         }
-
-        function renderRelatedCards(cardType, currentCardId) {
+        function renderRelatedCards(cardType, currentCardId) { 
             relatedCardsContainer.innerHTML = '';
             const related = allCards.filter(c => c.card_type === cardType && c.id !== currentCardId);
             relatedCardsTitle.textContent = `Other ${cardType}s`;
-            if (related.length === 0) {
-                noRelatedCardsP.classList.remove('hidden');
-                relatedCardsContainer.classList.add('hidden');
-            } else {
-                noRelatedCardsP.classList.add('hidden');
-                relatedCardsContainer.classList.remove('hidden');
-                related.forEach(card => relatedCardsContainer.appendChild(renderCardThumbnail(card, true)));
-            }
-        }
-
-        function setupFilters() {
-            cardTypeFiltersContainer.innerHTML = ''; 
-            const allButton = document.createElement('button');
-            allButton.className = 'filter-button active glassmorphic'; 
-            allButton.textContent = 'All Types';
-            allButton.dataset.cardType = 'all';
-            allButton.addEventListener('click', () => { setActiveFilterButton(allButton); filterAndRenderCards(); });
-            cardTypeFiltersContainer.appendChild(allButton);
-
-            Array.from(cardTypes).sort().forEach(type => {
-                const button = document.createElement('button');
-                button.className = 'filter-button glassmorphic'; 
-                button.textContent = type.replace(/\s*Card$/i, ''); 
-                button.dataset.cardType = type;
-                button.addEventListener('click', () => { setActiveFilterButton(button); filterAndRenderCards(); });
-                cardTypeFiltersContainer.appendChild(button);
-            });
-             setActiveFilterButton(allButton); 
+            if (related.length === 0) { noRelatedCardsP.classList.remove('hidden'); relatedCardsContainer.classList.add('hidden'); } 
+            else { noRelatedCardsP.classList.add('hidden'); relatedCardsContainer.classList.remove('hidden'); related.forEach(card => relatedCardsContainer.appendChild(renderCardThumbnail(card, true))); }
         }
         
-        function setActiveFilterButton(activeButton) {
-            cardTypeFiltersContainer.querySelectorAll('.filter-button').forEach(btn => {
-                btn.classList.remove('active');
-                btn.style.boxShadow = '0 2px 5px var(--shadow-color)'; 
-                btn.style.color = 'var(--text-secondary)';
-                btn.style.backgroundColor = 'var(--glass-bg)';
-            });
-            activeButton.classList.add('active');
-            activeButton.style.boxShadow = '0 0 10px var(--accent-color), inset 0 0 5px var(--accent-color)'; 
-            activeButton.style.color = 'var(--accent-color)';
-            activeButton.style.backgroundColor = 'rgba(0, 122, 255, 0.15)';
+        // --- Filtering and Search ---
+        function setupFilters() { 
+            if (!cardTypeFilterDropdown) return;
+            cardTypeFilterDropdown.innerHTML = ''; 
+            const allOption = document.createElement('option'); allOption.value = 'all'; allOption.textContent = 'All Types'; cardTypeFilterDropdown.appendChild(allOption);
+            Array.from(cardTypes).sort().forEach(type => { const option = document.createElement('option'); option.value = type; option.textContent = type.replace(/\s*Card$/i, ''); cardTypeFilterDropdown.appendChild(option); });
+            cardTypeFilterDropdown.value = 'all'; 
+            cardTypeFilterDropdown.addEventListener('change', filterAndRenderCards);
         }
-
+        
         let currentFilterType = 'all';
         let currentSearchTerm = '';
-
-        function filterAndRenderCards() {
+        function filterAndRenderCards() { 
             currentSearchTerm = searchInput.value.toLowerCase();
-            const activeFilterButton = cardTypeFiltersContainer.querySelector('.filter-button.active');
-            currentFilterType = activeFilterButton ? activeFilterButton.dataset.cardType : 'all';
+            currentFilterType = cardTypeFilterDropdown.value;
             let filteredCards = allCards;
-            if (currentFilterType !== 'all') {
-                filteredCards = filteredCards.filter(card => card.card_type === currentFilterType);
-            }
-            if (currentSearchTerm) {
-                filteredCards = filteredCards.filter(card => 
-                    (card.card_name && card.card_name.toLowerCase().includes(currentSearchTerm)) ||
-                    (card.card_type && card.card_type.toLowerCase().includes(currentSearchTerm)) ||
-                    (card.text && card.text.toLowerCase().includes(currentSearchTerm)) ||
-                    (card.effect_types_list && card.effect_types_list.toLowerCase().includes(currentSearchTerm))
-                );
-            }
+            if (currentFilterType !== 'all') { filteredCards = filteredCards.filter(card => card.card_type === currentFilterType); }
+            if (currentSearchTerm) { filteredCards = filteredCards.filter(card => (card.card_name && card.card_name.toLowerCase().includes(currentSearchTerm)) || (card.card_type && card.card_type.toLowerCase().includes(currentSearchTerm)) || (card.text && card.text.toLowerCase().includes(currentSearchTerm)) || (card.effect_types_list && card.effect_types_list.toLowerCase().includes(currentSearchTerm))); }
             renderGallery(filteredCards);
         }
 
-        function showGalleryView() {
-            galleryView.classList.remove('hidden');
+        // --- View Management ---
+        function showMainContentArea(areaToShow) { 
+            galleryView.classList.add('hidden');
             detailView.classList.add('hidden');
+            rulesView.classList.add('hidden');
+            if (areaToShow) areaToShow.classList.remove('hidden');
             if (onboardingModalOverlay) onboardingModalOverlay.classList.remove('active'); 
             if (deckModalOverlay) deckModalOverlay.classList.remove('active');
-            window.scrollTo(0, 0);
+            window.scrollTo(0, 0); // Scroll to top on view change
         }
 
-        function showDetailView(cardId) {
-            const card = allCards.find(c => c.id === cardId);
-            if (card) {
-                renderCardDetail(card);
-                galleryView.classList.add('hidden');
-                detailView.classList.remove('hidden');
-                if (onboardingModalOverlay) onboardingModalOverlay.classList.remove('active'); 
-                if (deckModalOverlay) deckModalOverlay.classList.remove('active');
-                window.scrollTo(0, 0);
-            }
-        }
-        
-        function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark-theme');
-                document.documentElement.classList.remove('light-theme');
+        function showGalleryView() { showMainContentArea(galleryView); }
+        function showDetailView(cardId) { const card = allCards.find(c => c.id === cardId); if (card) { renderCardDetail(card); showMainContentArea(detailView); } }
+        function showRulesView() { renderRulesPage(); showMainContentArea(rulesView); }
+
+        // --- Theme Management ---
+        function applyTheme(theme) { 
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            if (theme === 'dark') { 
+                document.documentElement.classList.add('dark-theme'); document.documentElement.classList.remove('light-theme'); 
                 if(themeToggle) themeToggle.checked = true;
-            } else {
-                document.documentElement.classList.add('light-theme');
-                document.documentElement.classList.remove('dark-theme');
+                if(sunIcon) sunIcon.style.opacity = '0';
+                if(moonIcon) moonIcon.style.opacity = '1';
+            } else { 
+                document.documentElement.classList.add('light-theme'); document.documentElement.classList.remove('dark-theme'); 
                 if(themeToggle) themeToggle.checked = false;
+                if(sunIcon) sunIcon.style.opacity = '1';
+                if(moonIcon) moonIcon.style.opacity = '0';
             }
         }
-
-        if(themeToggle) { 
-            themeToggle.addEventListener('change', () => {
-                const newTheme = themeToggle.checked ? 'dark' : 'light';
-                localStorage.setItem('theme', newTheme);
-                applyTheme(newTheme);
-            });
-        }
-
-        let currentOnboardingStep = 0;
-        const tcgGames = [
-            "Magic: The Gathering", "Pokémon Trading Card Game", "Yu-Gi-Oh!", 
-            "Hearthstone", "Marvel Snap", "One Piece Card Game", 
-            "Disney Lorcana", "Star Wars: Unlimited", "Flesh and Blood", 
-            "Digimon Card Game", "Other", "None"
-        ];
-
-        function showOnboardingStep(stepIndex) {
-            onboardingSteps.forEach((step, index) => {
-                if(step) step.classList.toggle('active', index === stepIndex);
-            });
-            currentOnboardingStep = stepIndex;
-        }
-
-        if (signUpButton) {
-            signUpButton.addEventListener('click', () => {
-                if(onboardingModalOverlay) onboardingModalOverlay.classList.add('active');
-                showOnboardingStep(0); 
-            });
-        }
-        if (closeOnboardingModalButton) {
-            closeOnboardingModalButton.addEventListener('click', () => {
-                if(onboardingModalOverlay) onboardingModalOverlay.classList.remove('active');
-            });
-        }
-        if(onboardingModalOverlay) {
-            onboardingModalOverlay.addEventListener('click', (event) => { 
-                if (event.target === onboardingModalOverlay) {
-                    onboardingModalOverlay.classList.remove('active');
-                }
-            });
-        }
-
-        const nextToStep2 = document.getElementById('nextToStep2');
-        const backToStep1 = document.getElementById('backToStep1');
-        const nextToStep3 = document.getElementById('nextToStep3');
-        const backToStep2 = document.getElementById('backToStep2');
-        const nextToStep4 = document.getElementById('nextToStep4');
-        const backToStep3 = document.getElementById('backToStep3');
-        const finishOnboarding = document.getElementById('finishOnboarding');
-
-        if(nextToStep2) nextToStep2.addEventListener('click', () => showOnboardingStep(1));
-        if(backToStep1) backToStep1.addEventListener('click', () => showOnboardingStep(0));
-        if(nextToStep3) nextToStep3.addEventListener('click', () => showOnboardingStep(2));
-        if(backToStep2) backToStep2.addEventListener('click', () => showOnboardingStep(1));
-        if(nextToStep4) nextToStep4.addEventListener('click', () => showOnboardingStep(3));
-        if(backToStep3) backToStep3.addEventListener('click', () => showOnboardingStep(2));
+        if(themeToggle) { themeToggle.addEventListener('change', () => { const newTheme = themeToggle.checked ? 'dark' : 'light'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); }); }
         
-        if(finishOnboarding) {
-            finishOnboarding.addEventListener('click', () => {
-                console.log("Onboarding complete (conceptual). Data would be sent to a backend.");
-                if(onboardingModalOverlay) onboardingModalOverlay.classList.remove('active');
-                alert("Sign up complete (conceptual)! Welcome!"); 
-            });
+        // --- Animated Search Placeholder ---
+        const searchPlaceholders = [ "Search card names...", "e.g., Luc Loic", "Search effects...", "e.g., ADD_CHARGE", "Find by type...", "Try 'Actor Card'", "Discover new cards!" ];
+        let placeholderAnimIndex = 0; let placeholderCharIndex = 0; let currentPlaceholderText = ''; let isDeletingPlaceholder = false; let placeholderAnimTimeout;
+        function typeAnimatedPlaceholder() {
+            const fullText = searchPlaceholders[placeholderAnimIndex];
+            if (isDeletingPlaceholder) { currentPlaceholderText = fullText.substring(0, placeholderCharIndex - 1); placeholderCharIndex--; } 
+            else { currentPlaceholderText = fullText.substring(0, placeholderCharIndex + 1); placeholderCharIndex++; }
+            searchInput.placeholder = currentPlaceholderText;
+            let typeSpeed = isDeletingPlaceholder ? 30 : 60; 
+            if (!isDeletingPlaceholder && placeholderCharIndex === fullText.length) { typeSpeed = 2000; isDeletingPlaceholder = true; } 
+            else if (isDeletingPlaceholder && placeholderCharIndex === 0) { isDeletingPlaceholder = false; placeholderAnimIndex = (placeholderAnimIndex + 1) % searchPlaceholders.length; typeSpeed = 300; }
+            placeholderAnimTimeout = setTimeout(typeAnimatedPlaceholder, typeSpeed);
         }
-        
-        if (tcgSurveyOptionsContainer) {
-            tcgGames.forEach(game => {
-                const optionDiv = document.createElement('div');
-                optionDiv.className = 'survey-option flex items-center';
-                const checkboxId = `tcg-${game.replace(/\s+/g, '-')}`;
-                optionDiv.innerHTML = `
-                    <input type="checkbox" id="${checkboxId}" name="tcg" value="${game}" class="neumorphic-checkbox">
-                    <label for="${checkboxId}">${game}</label>
-                `;
-                tcgSurveyOptionsContainer.appendChild(optionDiv);
-            });
+        if(searchInput) {
+            searchInput.addEventListener('focus', () => { clearTimeout(placeholderAnimTimeout); searchInput.placeholder = "Search name, text, effects..."; document.querySelector('.blinking-caret').style.display = 'none'; });
+            searchInput.addEventListener('blur', () => { if (searchInput.value === '') { placeholderCharIndex = 0; isDeletingPlaceholder = false; currentPlaceholderText = ''; typeAnimatedPlaceholder(); document.querySelector('.blinking-caret').style.display = 'block';} else { document.querySelector('.blinking-caret').style.display = 'none'; } });
+            searchInput.addEventListener('input', () => { document.querySelector('.blinking-caret').style.display = searchInput.value ? 'none' : 'block'; });
         }
 
-        // --- Deck Building Logic ---
-        function addCardToDeck(cardId) {
-            const cardToAdd = allCards.find(c => c.id === cardId);
-            if (!cardToAdd) return;
-
-            const existingCardInDeck = currentDeck.find(item => item.id === cardId);
-            if (existingCardInDeck) {
-                existingCardInDeck.quantity++;
+        // --- User Authentication (Conceptual) ---
+        function updateUserAuthUI() {
+            const storedUser = localStorage.getItem('lumiverseUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                signUpButton.classList.add('hidden');
+                logoutButton.classList.remove('hidden');
+                userWelcomeMessage.textContent = `Welcome, ${currentUser.username}!`;
+                userWelcomeMessage.classList.remove('hidden'); 
+                saveDeckSection.classList.remove('hidden');
+                savedDecksSection.classList.remove('hidden');
+                renderSavedDecks();
             } else {
-                currentDeck.push({ 
-                    ...cardToAdd, 
-                    quantity: 1,
-                    'item-key': cardToAdd.id, 
-                    'item-count': 1 
-                });
-            }
-            renderDeckModal(); 
-            if(deckModalOverlay && !deckModalOverlay.classList.contains('active')) {
-                 deckModalOverlay.classList.add('active'); 
+                currentUser = null;
+                signUpButton.classList.remove('hidden');
+                logoutButton.classList.add('hidden');
+                userWelcomeMessage.textContent = '';
+                userWelcomeMessage.classList.add('hidden'); 
+                saveDeckSection.classList.add('hidden');
+                savedDecksSection.classList.add('hidden');
             }
         }
 
-        function renderDeckModal() {
-            if (!deckCardList) return;
-            deckCardList.innerHTML = ''; 
+        if (signUpButton) { signUpButton.addEventListener('click', () => { if(onboardingModalOverlay) onboardingModalOverlay.classList.add('active'); showOnboardingStep(0); }); }
+        if (logoutButton) { logoutButton.addEventListener('click', () => { localStorage.removeItem('lumiverseUser'); if(currentUser) localStorage.removeItem(`lumiverseUserDecks_${currentUser.username}`); updateUserAuthUI(); currentDeck = []; renderDeckModal(); }); } 
+        
+        // --- Onboarding Modal Logic ---
+        let currentOnboardingStep = 0;
+        const tcgGames = [ "Magic: The Gathering", "Pokémon Trading Card Game", "Yu-Gi-Oh!", "Hearthstone", "Marvel Snap", "One Piece Card Game", "Disney Lorcana", "Star Wars: Unlimited", "Flesh and Blood", "Digimon Card Game", "Other", "None" ];
+        function showOnboardingStep(stepIndex) { onboardingSteps.forEach((step, index) => { if(step) step.classList.toggle('active', index === stepIndex); }); currentOnboardingStep = stepIndex; }
+        function displayError(elementId, message) { const errorEl = document.getElementById(elementId); if (errorEl) { errorEl.textContent = message; errorEl.classList.remove('hidden'); } }
+        function clearError(elementId) { const errorEl = document.getElementById(elementId); if (errorEl) { errorEl.textContent = ''; errorEl.classList.add('hidden'); } }
+        function validateEmail(email) { const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; return re.test(String(email).toLowerCase()); }
+        if (closeOnboardingModalButton) { closeOnboardingModalButton.addEventListener('click', () => { if(onboardingModalOverlay) onboardingModalOverlay.classList.remove('active'); }); }
+        if(onboardingModalOverlay) { onboardingModalOverlay.addEventListener('click', (event) => { if (event.target === onboardingModalOverlay) { onboardingModalOverlay.classList.remove('active'); } }); }
+        const nextToStep2 = document.getElementById('nextToStep2'); const backToStep1 = document.getElementById('backToStep1'); const nextToStep3 = document.getElementById('nextToStep3'); const backToStep2 = document.getElementById('backToStep2'); const nextToStep4 = document.getElementById('nextToStep4'); const backToStep3 = document.getElementById('backToStep3'); const finishOnboarding = document.getElementById('finishOnboarding');
+        if(nextToStep2) nextToStep2.addEventListener('click', () => { const email = document.getElementById('onboardingEmail').value; const password = document.getElementById('onboardingPassword').value; const confirmPassword = document.getElementById('onboardingConfirmPassword').value; let valid = true; clearError('emailError'); clearError('passwordError'); clearError('confirmPasswordError'); if (!validateEmail(email)) { displayError('emailError', 'Please enter a valid email.'); valid = false; } if (password.length < 6) { displayError('passwordError', 'Password must be at least 6 characters.'); valid = false; } if (password !== confirmPassword) { displayError('confirmPasswordError', 'Passwords do not match.'); valid = false; } if (valid) showOnboardingStep(1); });
+        if(backToStep1) backToStep1.addEventListener('click', () => showOnboardingStep(0));
+        if(nextToStep3) nextToStep3.addEventListener('click', () => { const username = document.getElementById('onboardingUsername').value; clearError('usernameError'); if (username.trim().length < 3) { displayError('usernameError', 'Username must be at least 3 characters.'); return; } showOnboardingStep(2); });
+        if(backToStep2) backToStep2.addEventListener('click', () => showOnboardingStep(1)); if(nextToStep4) nextToStep4.addEventListener('click', () => showOnboardingStep(3)); if(backToStep3) backToStep3.addEventListener('click', () => showOnboardingStep(2));
+        if(finishOnboarding) { finishOnboarding.addEventListener('click', () => { const email = document.getElementById('onboardingEmail').value; const username = document.getElementById('onboardingUsername').value; localStorage.setItem('lumiverseUser', JSON.stringify({ email: email, username: username })); updateUserAuthUI(); if(onboardingModalOverlay) onboardingModalOverlay.classList.remove('active'); alert(`Welcome, ${username}! Your account is set up (locally).`); }); }
+        if (tcgSurveyOptionsContainer) { tcgGames.forEach(game => { const optionDiv = document.createElement('div'); optionDiv.className = 'survey-option flex items-center'; const checkboxId = `tcg-${game.replace(/\s+/g, '-')}`; optionDiv.innerHTML = `<input type="checkbox" id="${checkboxId}" name="tcg" value="${game}" class="neumorphic-checkbox"><label for="${checkboxId}" class="text-xs sm:text-sm">${game}</label>`; tcgSurveyOptionsContainer.appendChild(optionDiv); }); }
+        
+        // --- Deck Management ---
+        function getSavedDecks() {
+            if (!currentUser) return [];
+            const decksJson = localStorage.getItem(`lumiverseUserDecks_${currentUser.username}`);
+            return decksJson ? JSON.parse(decksJson) : [];
+        }
+        function saveDecksToStorage(decks) {
+            if (!currentUser) return;
+            localStorage.setItem(`lumiverseUserDecks_${currentUser.username}`, JSON.stringify(decks));
+        }
+        if (saveCurrentDeckButton) {
+            saveCurrentDeckButton.addEventListener('click', () => {
+                const deckName = deckNameInput.value.trim();
+                if (!deckName) { alert("Please enter a name for your deck."); return; }
+                if (currentDeck.length === 0) { alert("Cannot save an empty deck."); return; }
+                
+                const savedDecks = getSavedDecks();
+                const existingDeckIndex = savedDecks.findIndex(d => d.name === deckName);
+                const newDeckData = { name: deckName, cards: JSON.parse(JSON.stringify(currentDeck)) }; 
 
-            if (currentDeck.length === 0) {
-                deckCardList.innerHTML = `<p class="text-center p-4" style="color: var(--text-secondary);">Your deck is empty. Add cards from the gallery!</p>`;
+                if (existingDeckIndex > -1) { 
+                    if (confirm(`A deck named "${deckName}" already exists. Overwrite it?`)) {
+                        savedDecks[existingDeckIndex] = newDeckData;
+                    } else { return; }
+                } else {
+                    savedDecks.push(newDeckData);
+                }
+                saveDecksToStorage(savedDecks);
+                renderSavedDecks();
+                deckNameInput.value = ''; 
+                alert(`Deck "${deckName}" saved!`);
+            });
+        }
+        function renderSavedDecks() {
+            savedDecksList.innerHTML = '';
+            const decks = getSavedDecks();
+            if (decks.length === 0) {
+                savedDecksList.innerHTML = `<p class="text-center p-2 text-xs sm:text-sm" style="color: var(--text-secondary);">No decks saved yet.</p>`;
                 return;
             }
-
-            currentDeck.forEach(deckItem => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex justify-between items-center p-2 glassmorphic rounded-md mb-2';
-                
-                const imageName = deckItem.card_name || 'Card';
-                const imageSrc = deckItem.image_url || `https://placehold.co/50x70/e0e5ec/374151?text=${encodeURIComponent(imageName.substring(0,10))}`;
-                
-                itemDiv.innerHTML = `
-                    <img src="${imageSrc}" alt="${imageName}" class="w-10 h-14 object-contain mr-3 rounded-sm">
-                    <div class="flex-grow">
-                        <p class="font-semibold text-sm" style="color: var(--text-primary);">${deckItem.card_name}</p>
-                        <p class="text-xs" style="color: var(--text-secondary);">${deckItem.card_type}</p>
-                    </div>
-                    <div class="flex items-center">
-                        <button class="deck-quantity-btn p-1 glassmorphic rounded-full mx-1" data-card-id="${deckItem.id}" data-action="decrease" style="color: var(--accent-color);">-</button>
-                        <span class="mx-2 text-sm" style="color: var(--text-primary);">${deckItem.quantity}</span>
-                        <button class="deck-quantity-btn p-1 glassmorphic rounded-full mx-1" data-card-id="${deckItem.id}" data-action="increase" style="color: var(--accent-color);">+</button>
-                        <button class="deck-remove-btn p-1.5 glassmorphic rounded-full ml-3" data-card-id="${deckItem.id}" title="Remove from Deck">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color: #ef4444;">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
+            decks.forEach((deck, index) => {
+                const deckItemDiv = document.createElement('div');
+                deckItemDiv.className = 'flex flex-col sm:flex-row justify-between items-start sm:items-center p-2 glassmorphic rounded-md text-xs sm:text-sm mb-2';
+                deckItemDiv.innerHTML = `
+                    <span style="color: var(--text-primary);" class="mb-2 sm:mb-0 truncate w-full sm:w-auto" title="${deck.name}">${deck.name} (${deck.cards.reduce((sum, card) => sum + card.quantity, 0)} cards)</span>
+                    <div class="flex gap-2 flex-wrap w-full sm:w-auto justify-end">
+                        <button class="load-deck-btn onboarding-button text-xs py-1 px-2" data-deck-index="${index}" data-load-action="replace">Load (Replace)</button>
+                        <button class="load-deck-btn onboarding-button text-xs py-1 px-2" data-deck-index="${index}" data-load-action="add">Load (Add)</button>
+                        <button class="delete-deck-btn onboarding-button text-xs py-1 px-2" data-deck-index="${index}" style="background-color: var(--icon-color-cost); color: white;">Delete</button>
                     </div>
                 `;
-                deckCardList.appendChild(itemDiv);
+                savedDecksList.appendChild(deckItemDiv);
             });
 
-            deckCardList.querySelectorAll('.deck-quantity-btn').forEach(btn => {
+            savedDecksList.querySelectorAll('.load-deck-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const cardId = e.currentTarget.dataset.cardId;
-                    const action = e.currentTarget.dataset.action;
-                    updateDeckQuantity(cardId, action);
-                });
-            });
-            deckCardList.querySelectorAll('.deck-remove-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const cardId = e.currentTarget.closest('.deck-remove-btn').dataset.cardId;
-                    removeCardFromDeck(cardId);
-                });
-            });
-        }
-        
-        function updateDeckQuantity(cardId, action) {
-            const cardInDeck = currentDeck.find(item => item.id === cardId);
-            if (!cardInDeck) return;
-
-            if (action === 'increase') {
-                cardInDeck.quantity++;
-            } else if (action === 'decrease') {
-                cardInDeck.quantity--;
-                if (cardInDeck.quantity <= 0) {
-                    removeCardFromDeck(cardId); 
-                    return; 
-                }
-            }
-            renderDeckModal();
-        }
-
-        function removeCardFromDeck(cardId) {
-            currentDeck = currentDeck.filter(item => item.id !== cardId);
-            renderDeckModal();
-        }
-
-        if (deckIconButton) {
-            deckIconButton.addEventListener('click', () => {
-                renderDeckModal(); 
-                if(deckModalOverlay) deckModalOverlay.classList.add('active');
-            });
-        }
-        if (closeDeckModalButton) {
-            closeDeckModalButton.addEventListener('click', () => {
-                if(deckModalOverlay) deckModalOverlay.classList.remove('active');
-            });
-        }
-        if (deckModalOverlay) {
-             deckModalOverlay.addEventListener('click', (event) => { 
-                if (event.target === deckModalOverlay) {
-                    deckModalOverlay.classList.remove('active');
-                }
-            });
-        }
-
-        if (downloadDeckCsvButton) {
-            downloadDeckCsvButton.addEventListener('click', () => {
-                if (currentDeck.length === 0) {
-                    alert("Your deck is empty!");
-                    return;
-                }
-                let csvContent = "image,label,item-count,item-key\n"; 
-                currentDeck.forEach(deckCard => {
-                    const label = `${deckCard.card_type}: ${deckCard.card_name}.jpeg`; 
-                    const image = deckCard.image_url || "";
-                    const itemKey = deckCard.id; 
-                    const itemCount = deckCard.quantity;
-                    csvContent += `"${image.replace(/"/g, '""')}","${label.replace(/"/g, '""')}",${itemCount},"${itemKey.replace(/"/g, '""')}"\n`;
-                });
-                
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement("a");
-                if (link.download !== undefined) { 
-                    const url = URL.createObjectURL(blob);
-                    link.setAttribute("href", url);
-                    link.setAttribute("download", "my_deck.csv");
-                    link.style.visibility = 'hidden';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
-                } else {
-                    alert("CSV download not supported by your browser.");
-                }
-            });
-        }
-
-        if (importDeckCsvInput) {
-            importDeckCsvInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const importedCsvText = e.target.result;
-                        try {
-                            const newDeck = [];
-                            const lines = importedCsvText.trim().split('\n');
-                            const headerLine = lines[0].toLowerCase();
-                            if (!headerLine.includes('image') || !headerLine.includes('label') || !headerLine.includes('item-count') || !headerLine.includes('item-key')) {
-                                alert("Imported CSV has incorrect or missing headers. Expected columns: image, label, item-count, item-key");
-                                return;
-                            }
-                            const headers = headerLine.split(',').map(h => h.replace(/"/g,'').trim());
-                            const imageIndex = headers.indexOf('image');
-                            const labelIndex = headers.indexOf('label');
-                            const itemCountIndex = headers.indexOf('item-count');
-                            const itemKeyIndex = headers.indexOf('item-key');
-
-
-                            for (let i = 1; i < lines.length; i++) {
-                                const values = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
-                                if (values.length < Math.max(imageIndex, labelIndex, itemCountIndex, itemKeyIndex) + 1) continue;
-
-                                const itemKey = (values[itemKeyIndex] || '').replace(/"/g, '').trim();
-                                const itemCount = parseInt(values[itemCountIndex] || '0', 10);
-                                
-                                const cardData = allCards.find(c => c.id === itemKey);
-                                
-                                if (cardData && itemCount > 0) {
-                                    const existingInNewDeck = newDeck.find(dCard => dCard.id === cardData.id);
-                                    if(existingInNewDeck) {
-                                        existingInNewDeck.quantity += itemCount;
-                                    } else {
-                                        newDeck.push({ ...cardData, quantity: itemCount });
-                                    }
+                    const deckIndex = parseInt(e.currentTarget.dataset.deckIndex);
+                    const loadAction = e.currentTarget.dataset.loadAction;
+                    const decks = getSavedDecks();
+                    if (decks[deckIndex]) {
+                        const deckToLoad = JSON.parse(JSON.stringify(decks[deckIndex].cards)); 
+                        if (loadAction === 'replace') {
+                            currentDeck = deckToLoad;
+                        } else if (loadAction === 'add') {
+                            deckToLoad.forEach(cardToAdd => {
+                                const existingCardInCurrentDeck = currentDeck.find(item => item.id === cardToAdd.id);
+                                if (existingCardInCurrentDeck) {
+                                    existingCardInCurrentDeck.quantity += cardToAdd.quantity;
+                                } else {
+                                    currentDeck.push(cardToAdd);
                                 }
-                            }
-                            currentDeck = newDeck;
-                            renderDeckModal();
-                            if(deckModalOverlay && !deckModalOverlay.classList.contains('active')) {
-                                deckModalOverlay.classList.add('active');
-                            }
-                            alert("Deck imported successfully!");
-                        } catch (error) {
-                            console.error("Error importing deck:", error);
-                            alert("Failed to import deck. Please ensure the CSV format is correct.");
+                            });
                         }
-                    };
-                    reader.readAsText(file);
-                }
-                event.target.value = null; 
+                        renderDeckModal(); 
+                        alert(`Deck "${decks[deckIndex].name}" loaded!`);
+                    }
+                });
             });
+             savedDecksList.querySelectorAll('.delete-deck-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const deckIndex = parseInt(e.currentTarget.dataset.deckIndex);
+                    let decks = getSavedDecks();
+                    if (decks[deckIndex]) {
+                        if (confirm(`Are you sure you want to delete the deck "${decks[deckIndex].name}"?`)) {
+                            decks.splice(deckIndex, 1);
+                            saveDecksToStorage(decks);
+                            renderSavedDecks();
+                            alert("Deck deleted.");
+                        }
+                    }
+                });
+            });
+        }
+
+        function addCardToDeck(cardId) { const cardToAdd = allCards.find(c => c.id === cardId); if (!cardToAdd) return; const existingCardInDeck = currentDeck.find(item => item.id === cardId); if (existingCardInDeck) { existingCardInDeck.quantity++; } else { currentDeck.push({ ...cardToAdd, quantity: 1, 'item-key': cardToAdd.id, 'item-count': 1 }); } renderDeckModal(); if(deckModalOverlay && !deckModalOverlay.classList.contains('active')) { deckModalOverlay.classList.add('active'); } }
+        function renderDeckModal() { if (!deckCardList) return; deckCardList.innerHTML = ''; if (currentDeck.length === 0) { deckCardList.innerHTML = `<p class="text-center p-4 text-sm sm:text-base" style="color: var(--text-secondary);">Your deck is empty.</p>`; return; } currentDeck.forEach(deckItem => { const itemDiv = document.createElement('div'); itemDiv.className = 'flex justify-between items-center p-2 glassmorphic rounded-md mb-2'; const imageName = deckItem.card_name || 'Card'; const imageSrc = deckItem.image_url || `https://placehold.co/50x70/e0e5ec/374151?text=${encodeURIComponent(imageName.substring(0,10))}`; itemDiv.innerHTML = `<img src="${imageSrc}" alt="${imageName}" class="w-8 h-12 sm:w-10 sm:h-14 object-contain mr-2 sm:mr-3 deck-card-list-image"><div class="flex-grow"><p class="font-semibold text-xs sm:text-sm" style="color: var(--text-primary);">${deckItem.card_name}</p><p class="text-xs" style="color: var(--text-secondary);">${deckItem.card_type}</p></div><div class="flex items-center gap-1 sm:gap-0"><button class="deck-quantity-btn p-1 glassmorphic rounded-full mx-0 sm:mx-1 text-xs sm:text-sm" data-card-id="${deckItem.id}" data-action="decrease" style="color: var(--accent-color);">-</button><span class="mx-1 sm:mx-2 text-xs sm:text-sm" style="color: var(--text-primary);">${deckItem.quantity}</span><button class="deck-quantity-btn p-1 glassmorphic rounded-full mx-0 sm:mx-1 text-xs sm:text-sm" data-card-id="${deckItem.id}" data-action="increase" style="color: var(--accent-color);">+</button><button class="deck-remove-btn p-1 sm:p-1.5 glassmorphic rounded-full ml-1 sm:ml-3" data-card-id="${deckItem.id}" title="Remove from Deck"><svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color: #ef4444;"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></div>`; deckCardList.appendChild(itemDiv); }); deckCardList.querySelectorAll('.deck-quantity-btn').forEach(btn => { btn.addEventListener('click', (e) => { const cardId = e.currentTarget.dataset.cardId; const action = e.currentTarget.dataset.action; updateDeckQuantity(cardId, action); }); }); deckCardList.querySelectorAll('.deck-remove-btn').forEach(btn => { btn.addEventListener('click', (e) => { const cardId = e.currentTarget.closest('.deck-remove-btn').dataset.cardId; removeCardFromDeck(cardId); }); }); if(currentUser) { renderSavedDecks(); } }
+        function updateDeckQuantity(cardId, action) { const cardInDeck = currentDeck.find(item => item.id === cardId); if (!cardInDeck) return; if (action === 'increase') { cardInDeck.quantity++; } else if (action === 'decrease') { cardInDeck.quantity--; if (cardInDeck.quantity <= 0) { removeCardFromDeck(cardId); return; } } renderDeckModal(); }
+        function removeCardFromDeck(cardId) { currentDeck = currentDeck.filter(item => item.id !== cardId); renderDeckModal(); }
+        if (deckIconButton) { deckIconButton.addEventListener('click', () => { renderDeckModal(); if(deckModalOverlay) deckModalOverlay.classList.add('active'); }); }
+        if (closeDeckModalButton) { closeDeckModalButton.addEventListener('click', () => { if(deckModalOverlay) deckModalOverlay.classList.remove('active'); }); }
+        if (deckModalOverlay) { deckModalOverlay.addEventListener('click', (event) => { if (event.target === deckModalOverlay) { deckModalOverlay.classList.remove('active'); } }); }
+        if (downloadDeckCsvButton) { downloadDeckCsvButton.addEventListener('click', () => { if (currentDeck.length === 0) { alert("Your deck is empty!"); return; } let csvContent = "image,label,item-count,item-key\n"; currentDeck.forEach(deckCard => { const label = `${deckCard.card_type}: ${deckCard.card_name}.jpeg`; const image = deckCard.image_url || ""; const itemKey = deckCard.id; const itemCount = deckCard.quantity; csvContent += `"${image.replace(/"/g, '""')}","${label.replace(/"/g, '""')}",${itemCount},"${itemKey.replace(/"/g, '""')}"\n`; }); const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); if (link.download !== undefined) { const url = URL.createObjectURL(blob); link.setAttribute("href", url); link.setAttribute("download", "my_deck.csv"); link.style.visibility = 'hidden'; document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url); } else { alert("CSV download not supported."); } }); }
+        if (importDeckCsvInput) { importDeckCsvInput.addEventListener('change', (event) => { const file = event.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = (e) => { const importedCsvText = e.target.result; try { const newDeck = []; const lines = importedCsvText.trim().split('\n'); const headerLine = lines[0].toLowerCase(); if (!headerLine.includes('image') || !headerLine.includes('label') || !headerLine.includes('item-count') || !headerLine.includes('item-key')) { alert("Imported CSV has incorrect headers."); return; } const headers = headerLine.split(',').map(h => h.replace(/"/g,'').trim()); const imageIndex = headers.indexOf('image'); const labelIndex = headers.indexOf('label'); const itemCountIndex = headers.indexOf('item-count'); const itemKeyIndex = headers.indexOf('item-key'); for (let i = 1; i < lines.length; i++) { const values = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || []; if (values.length < Math.max(imageIndex, labelIndex, itemCountIndex, itemKeyIndex) + 1) continue; const itemKey = (values[itemKeyIndex] || '').replace(/"/g, '').trim(); const itemCount = parseInt(values[itemCountIndex] || '0', 10); const cardData = allCards.find(c => c.id === itemKey); if (cardData && itemCount > 0) { const existingInNewDeck = newDeck.find(dCard => dCard.id === cardData.id); if(existingInNewDeck) { existingInNewDeck.quantity += itemCount; } else { newDeck.push({ ...cardData, quantity: itemCount }); } } } currentDeck = newDeck; renderDeckModal(); if(deckModalOverlay && !deckModalOverlay.classList.contains('active')) { deckModalOverlay.classList.add('active'); } alert("Deck imported successfully!"); } catch (error) { console.error("Error importing deck:", error); alert("Failed to import deck."); } }; reader.readAsText(file); } event.target.value = null; }); }
+        
+        // --- How to Play Page Logic ---
+        const gameRulesText = `
+Official Lumiverse Card Game Rulebook
+
+## Objective
+Win by raising your opponent's heart rate above their Maximum BPM, listed in the top-right corner of their Actor Card. When a player's BPM exceeds their maximum, their opponent gains root access to their cyberbrain, granting them control over the defeated player.
+
+## Game Setup
+1.  **Actor Card Selection:** Each player selects their Actor Card and places it on the Stage.
+2.  **Datalyths:** Attach up to 2 Datalyth Cards to your Actor Card before the game begins.
+3.  **Draw Initial Hand:** Each player draws 5 cards from their deck.
+4.  **Decide Who Goes First:** Flip a coin. The winner decides who takes the first turn. Players cannot attack on their first turn.
+
+### The Stage (Conceptual Illustration Placeholder)
+<div class="rules-illustration-placeholder">Illustration: A diagram of the game board. Each player's side has one Actor Card slot. To the left and right of the Actor are two Datalyth Card slots each (total 4 per player). Below the Actor/Datalyths are five slots arranged horizontally for Effect and Supporter Cards. A Deck area and a Source (discard pile) area are also shown for each player.</div>
+
+### Deck
+Each player selects a deck of at least 40 cards.
+
+## Gameplay
+### Turn Sequence
+1.  **Draw Phase:** Draw 1 card from your deck.
+2.  **Play Phase:** Play any number of cards, provided their conditions are met. Cards include: Care Cards, Item Cards, Server Cards, Effect Cards.
+3.  **Attack Phase:**
+    * Use your Datalyths to attack your opponent's Actor.
+    * Calculate damage by subtracting your attack's Charge Value from your opponent's Datalyth charge.
+    * Damage that exceeds your opponent's active charge increases their Actor's BPM by 10 for every 100 points of excess damage.
+4.  **End Phase:** End your turn and pass play to your opponent.
+
+## Card Types
+### Actor Cards
+* Represent the player in the game.
+* Contain Maximum BPM and Innate Abilities that impact gameplay.
+### Datalyth Cards
+* Attach to Actor Cards to enable attacks.
+* Gain Charge through Care Cards, Item Cards, and Actor abilities.
+* Datalyths charge one at a time, starting with the first in the stream. Each Datalyth can charge up to its Per Lyth Value, as indicated on the card.
+* When a single Datalyth is fully charged, any additional charge is automatically transferred to the next Datalyth in the stream.
+* Once all Datalyths in the stream are fully charged, reaching the Per Stack Value, the entire stack gains an Attack equal to the Stack Damage Value listed on the card, which includes an attack bonus.
+### Care Cards
+* Provide meditative actions that add Charge to Datalyths.
+* Played during the Play Phase before an Attack Phase.
+### Item Cards
+* Equip to Actors or Datalyths to enhance stats or provide new abilities.
+### Server Cards
+* Change the conditions on the Stage.
+* Grant bonuses to specific Actors, Datalyths, or playstyles.
+* Only one Server Card can be active at a time.
+### Effect Cards
+* Provide one-time effects.
+* Sent to the Source (discard pile) after use unless stated otherwise.
+### Supporter Cards
+* Attach to an Actor on the Stage.
+* Provide ongoing or situational bonuses.
+### Script Cards
+* Script cards are placed face down on the Stage and may be activated on any turn following the turn they are set providing the activation requirement listed on the card are fulfilled, after which their effects are activated.
+
+## Key Concepts
+* **Charge Value:** The power level of a Datalyth, raised by Care Cards, Item Cards, and Effect Cards.
+* **Maximum BPM:** The limit listed on Actor Cards. Exceeding this threshold ends the game.
+* **Source:** The discard pile for cards that are no longer active.
+
+## Winning the Game
+### Heart Rate Overload
+Raise your opponent's BPM above their Maximum BPM to achieve victory.
+
+Unleash your strategies with Actor abilities, Server effects, and card combinations in this cybernetic battle of minds and machines!
+        `;
+
+        function formatRules(rulesText) {
+            let html = rulesText;
+            // Convert markdown-like headers to HTML headers
+            html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^### (.*$)/gim, '<h4>$1</h4>');
+            html = html.replace(/^#### (.*$)/gim, '<h5>$1</h5>');
+            
+            // Convert lists (simple version, assuming basic markdown lists)
+            html = html.replace(/^\* (.*$)/gim, '<li>$1</li>'); // Unordered list items
+            html = html.replace(/^\d+\. (.*$)/gim, '<li>$1</li>'); // Ordered list items (will be styled by ol)
+            
+            // Wrap list items in <ul> or <ol> 
+            html = html.replace(/^(<li>.*<\/li>\s*)+/gm, (match) => {
+                if (match.startsWith('<li>1.') || /<li>\d+\./.test(match)) { 
+                    return `<ol>${match.replace(/<li>\d+\. /g, '<li>')}</ol>`;
+                }
+                return `<ul>${match}</ul>`;
+            });
+
+            // Convert bold (**text**)
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Convert paragraphs
+            html = html.split('\n').map(line => {
+                line = line.trim();
+                if (line.length === 0) return '';
+                if (line.startsWith('<h') || line.startsWith('<ul') || line.startsWith('<ol') || line.startsWith('<li') || line.startsWith('<div class="rules-illustration-placeholder"')) {
+                    return line;
+                }
+                return `<p>${line}</p>`;
+            }).join('\n');
+            
+            return html;
+        }
+
+
+        function renderRulesPage() {
+            const rulesContentContainer = document.getElementById('rulesContentContainer');
+            if (rulesContentContainer) {
+                rulesContentContainer.innerHTML = formatRules(gameRulesText);
+            }
+        }
+
+        if (howToPlayButton) {
+            howToPlayButton.addEventListener('click', showRulesView);
+        }
+        if (backToGalleryFromRulesButton) {
+            backToGalleryFromRulesButton.addEventListener('click', showGalleryView);
         }
 
 
         // --- Main Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'dark'; 
-            applyTheme(savedTheme);
+            const userSelectedTheme = localStorage.getItem('theme');
+            applyTheme(userSelectedTheme || 'dark'); 
+            updateUserAuthUI(); 
             
             allCards = parseAndMergeCSV(); 
             if (allCards.length === 0) {
-                console.warn("No valid card data parsed. Check CSV formats and content.");
-                noResultsP.textContent = "Could not load card data. Please check the CSV formats.";
+                noResultsP.textContent = "Could not load card data.";
                 noResultsP.classList.remove('hidden');
             }
             setupFilters(); 
-            renderGallery(allCards);
-            searchInput.addEventListener('input', filterAndRenderCards);
-            backToGalleryButton.addEventListener('click', showGalleryView);
+            filterAndRenderCards(); // Initial render based on default filters
+            if (searchInput && searchInput.value === '') { 
+                typeAnimatedPlaceholder();
+                document.querySelector('.blinking-caret').style.display = 'block';
+            } else if (searchInput) {
+                 document.querySelector('.blinking-caret').style.display = 'none';
+            }
+            if(searchInput) searchInput.addEventListener('input', filterAndRenderCards);
+            if(backToGalleryButton) backToGalleryButton.addEventListener('click', showGalleryView);
         });
     </script>
 </body>
